@@ -2054,6 +2054,87 @@
       text-align: center;
     }
 
+    /* Online Bookings Closed Banner */
+    .tf-closed-banner {
+      background-color: #fbf4ec;
+      border: 1.5px solid rgba(200, 55, 45, 0.28);
+      border-radius: 14px;
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .tf-closed-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+    }
+
+    .tf-closed-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background-color: rgba(200, 55, 45, 0.12);
+      color: var(--accent-tomato);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .tf-closed-banner h4 {
+      font-family: var(--font-display);
+      font-size: 1.08rem;
+      margin: 0 0 4px;
+      color: var(--text-ink);
+    }
+
+    .tf-closed-banner p {
+      margin: 0;
+      font-size: 0.86rem;
+      line-height: 1.52;
+      color: var(--text-body);
+    }
+
+    .tf-closed-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tf-closed-actions .btn {
+      flex: 1 1 140px;
+      padding: 10px 14px;
+      min-height: 42px;
+      font-size: 0.85rem;
+    }
+
+    .footer-meta-right {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 14px;
+    }
+
+    .footer-host-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--text-ivory-muted);
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 3px 9px;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-dark);
+      transition: color var(--transition), border-color var(--transition), background-color var(--transition);
+    }
+
+    .footer-host-link:hover {
+      color: var(--accent-copper);
+      border-color: var(--border-copper);
+      background-color: rgba(212, 155, 75, 0.08);
+    }
+
     /* Confirmation View In-Page */
     .tf-confirm {
       display: none;
@@ -3798,100 +3879,102 @@
 
               <!-- STEP 3: Orario, Zona & Dati minimi -->
               <div class="tf-panel" id="tfPanel3" role="tabpanel" aria-labelledby="tfStepTab3" hidden>
-                <div class="tf-shift-block">
-                  <div class="tf-shift-label">
-                    <span>Primo turno</span>
-                    <span>19:00 &ndash; 20:30</span>
-                  </div>
-                  <div class="tf-slots-grid" role="group" aria-label="Orari primo turno">
-                    <button type="button" class="tf-slot-btn" data-time="19:00">
-                      <span class="tf-slot-time">19:00</span>
-                    </button>
-                    <button type="button" class="tf-slot-btn" data-time="19:30">
-                      <span class="tf-slot-time">19:30</span>
-                    </button>
-                    <button type="button" class="tf-slot-btn is-selected" data-time="20:00" aria-pressed="true">
-                      <span class="tf-slot-time">20:00</span>
-                    </button>
-                    <button type="button" class="tf-slot-btn" data-time="20:30">
-                      <span class="tf-slot-time">20:30</span>
-                      <span class="tf-slot-tag tf-slot-tag--warn">Ultimi posti</span>
-                    </button>
-                  </div>
-                </div>
-
-                <div class="tf-shift-block">
-                  <div class="tf-shift-label">
-                    <span>Secondo turno</span>
-                    <span>21:00 &ndash; 22:30</span>
-                  </div>
-                  <div class="tf-slots-grid" role="group" aria-label="Orari secondo turno">
-                    <button type="button" class="tf-slot-btn" data-time="21:00" disabled aria-disabled="true">
-                      <span class="tf-slot-time">21:00</span>
-                      <span class="tf-slot-tag tf-slot-tag--full">Completo</span>
-                    </button>
-                    <button type="button" class="tf-slot-btn" data-time="21:30">
-                      <span class="tf-slot-time">21:30</span>
-                    </button>
-                    <button type="button" class="tf-slot-btn" data-time="22:00">
-                      <span class="tf-slot-time">22:00</span>
-                    </button>
-                    <button type="button" class="tf-slot-btn" data-time="22:30">
-                      <span class="tf-slot-time">22:30</span>
-                    </button>
-                  </div>
-                </div>
-
-                <!-- Optional Zone Selector -->
-                <div class="tf-zone-block">
-                  <div class="tf-shift-label">
-                    <span>Preferenza zona (opzionale)</span>
-                  </div>
-                  <div class="tf-zones" role="group" aria-label="Preferenza zona del tavolo">
-                    <button type="button" class="tf-zone-btn is-selected" data-zone="Sala principale" aria-pressed="true">Sala principale</button>
-                    <button type="button" class="tf-zone-btn" data-zone="Vicino al forno a legna">Vicino al forno a legna</button>
-                    <button type="button" class="tf-zone-btn" data-zone="Dehors">Dehors</button>
-                  </div>
-                </div>
-
-                <!-- Ticket Summary Stub -->
-                <div class="tf-ticket" aria-live="polite">
-                  <span class="tf-ticket-kicker">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path></svg>
-                    Riepilogo tavolo selezionato
-                  </span>
-                  <div class="tf-ticket-line" id="tfTicketSummary">2 persone &middot; -- &middot; 20:00 &middot; Sala principale</div>
-                </div>
-
-                <!-- Essential Guest Contact Form -->
-                <form id="tfDetailsForm" novalidate style="display: flex; flex-direction: column; gap: 13px;">
-                  <div class="form-grid">
-                    <div class="form-field">
-                      <label for="tfName">Nome e Cognome *</label>
-                      <input type="text" id="tfName" name="name" placeholder="Es. Marco Rossi" autocomplete="name" required>
+                <!-- Banner mostrato se le prenotazioni online sono chiuse dalla sala -->
+                <div class="tf-closed-banner" id="tfClosedBanner" hidden role="alert">
+                  <div class="tf-closed-head">
+                    <span class="tf-closed-icon" aria-hidden="true">
+                      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    </span>
+                    <div>
+                      <h4>Prenotazioni online chiuse per questa serata</h4>
+                      <p>Al momento la gestione sala ha sospeso le prenotazioni online. Per verificare disponibilit&agrave; dell'ultimo minuto contattaci direttamente su WhatsApp o al <strong>+39 333 000 1122</strong>.</p>
                     </div>
-                    <div class="form-field">
-                      <label for="tfPhone">Telefono *</label>
-                      <input type="tel" id="tfPhone" name="phone" placeholder="Es. +39 333 123 4567" autocomplete="tel" required>
+                  </div>
+                  <div class="tf-closed-actions">
+                    <a
+                      href="https://wa.me/393330001122?text=Ciao%20Pizzeria%20Forno%2089!%20Ho%20visto%20che%20le%20prenotazioni%20online%20sono%20chiuse%2C%20avete%20ancora%20un%20tavolo%20disponibile%3F"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="btn btn--primary"
+                    >
+                      Scrivici su WhatsApp
+                    </a>
+                    <a href="tel:+393330001122" class="btn btn--outline-dark">
+                      Chiama +39 333 000 1122
+                    </a>
+                  </div>
+                  <button type="button" class="tf-back-btn" data-tf-goto="2">&larr; Scegli un'altra data</button>
+                </div>
+
+                <!-- Contenuto attivo quando prenotazioni online aperte -->
+                <div id="tfStep3Active" style="display: flex; flex-direction: column; gap: 16px;">
+                  <div class="tf-shift-block">
+                    <div class="tf-shift-label">
+                      <span>Primo turno</span>
+                      <span>19:00 &ndash; 20:30</span>
                     </div>
-                    <div class="form-field form-field--full">
-                      <label for="tfNotes">Note o allergie <span>(opzionale)</span></label>
-                      <input type="text" id="tfNotes" name="notes" placeholder="Es. Seggiolone, senza lattosio, tavolo tranquillo">
+                    <div class="tf-slots-grid" id="tfShift1Grid" role="group" aria-label="Orari primo turno"></div>
+                  </div>
+
+                  <div class="tf-shift-block">
+                    <div class="tf-shift-label">
+                      <span>Secondo turno</span>
+                      <span>21:00 &ndash; 22:30</span>
+                    </div>
+                    <div class="tf-slots-grid" id="tfShift2Grid" role="group" aria-label="Orari secondo turno"></div>
+                  </div>
+
+                  <!-- Optional Zone Selector -->
+                  <div class="tf-zone-block">
+                    <div class="tf-shift-label">
+                      <span>Preferenza zona (opzionale)</span>
+                    </div>
+                    <div class="tf-zones" role="group" aria-label="Preferenza zona del tavolo">
+                      <button type="button" class="tf-zone-btn is-selected" data-zone="Sala principale" aria-pressed="true">Sala principale</button>
+                      <button type="button" class="tf-zone-btn" data-zone="Vicino al forno a legna">Vicino al forno a legna</button>
+                      <button type="button" class="tf-zone-btn" data-zone="Dehors">Dehors</button>
                     </div>
                   </div>
 
-                  <p class="form-feedback" id="tfFeedback" role="status" aria-live="polite"></p>
-
-                  <button type="submit" class="btn btn--primary btn--full">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    Conferma prenotazione
-                  </button>
-
-                  <div class="tf-nav-row" style="padding-top: 0;">
-                    <button type="button" class="tf-back-btn" data-tf-goto="2">&larr; Cambia data</button>
-                    <span class="booking-note">Nessuna carta richiesta &middot; Cancellazione gratuita</span>
+                  <!-- Ticket Summary Stub -->
+                  <div class="tf-ticket" aria-live="polite">
+                    <span class="tf-ticket-kicker">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path></svg>
+                      Riepilogo tavolo selezionato
+                    </span>
+                    <div class="tf-ticket-line" id="tfTicketSummary">2 persone &middot; -- &middot; 20:00 &middot; Sala principale</div>
                   </div>
-                </form>
+
+                  <!-- Essential Guest Contact Form -->
+                  <form id="tfDetailsForm" novalidate style="display: flex; flex-direction: column; gap: 13px;">
+                    <div class="form-grid">
+                      <div class="form-field">
+                        <label for="tfName">Nome e Cognome *</label>
+                        <input type="text" id="tfName" name="name" placeholder="Es. Marco Rossi" autocomplete="name" required>
+                      </div>
+                      <div class="form-field">
+                        <label for="tfPhone">Telefono *</label>
+                        <input type="tel" id="tfPhone" name="phone" placeholder="Es. +39 333 123 4567" autocomplete="tel" required>
+                      </div>
+                      <div class="form-field form-field--full">
+                        <label for="tfNotes">Note o allergie <span>(opzionale)</span></label>
+                        <input type="text" id="tfNotes" name="notes" placeholder="Es. Seggiolone, senza lattosio, tavolo tranquillo">
+                      </div>
+                    </div>
+
+                    <p class="form-feedback" id="tfFeedback" role="status" aria-live="polite"></p>
+
+                    <button type="submit" class="btn btn--primary btn--full" id="tfSubmitBtn">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                      Conferma prenotazione
+                    </button>
+
+                    <div class="tf-nav-row" style="padding-top: 0;">
+                      <button type="button" class="tf-back-btn" data-tf-goto="2">&larr; Cambia data</button>
+                      <span class="booking-note">Nessuna carta richiesta &middot; Cancellazione gratuita</span>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
 
@@ -4428,7 +4511,13 @@
 
       <div class="footer-bottom">
         <span>&copy; 2026 Pizzeria Forno 89 &mdash; Progetto dimostrativo di fantasia (dati fittizi)</span>
-        <span class="footer-credit">Sito dimostrativo realizzato da <strong>MGD Studio</strong></span>
+        <div class="footer-meta-right">
+          <span class="footer-credit">Sito dimostrativo realizzato da <strong>MGD Studio</strong></span>
+          <a href="admin.html" class="footer-host-link" aria-label="Accedi all'Area Host Gestione Sala">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            Area Host
+          </a>
+        </div>
       </div>
     </div>
   </footer>
@@ -4571,8 +4660,316 @@
       });
 
       /* ----------------------------------------------------------------------
-         4. TheFork-Style 3-Step Table Booking Widget + .ics Calendar + WhatsApp
+         4. Shared BookingStore (localStorage + BroadcastChannel, Supabase-ready)
+            + TheFork-Style 3-Step Widget with Real Seat Capacity
          ---------------------------------------------------------------------- */
+      const SUPABASE_CONFIG = {
+        enabled: false,
+        url: 'https://YOUR_PROJECT_REF.supabase.co',
+        anonKey: 'YOUR_SUPABASE_ANON_KEY',
+        tables: {
+          bookings: 'bookings',
+          settings: 'sala_settings'
+        }
+      };
+
+      const ALL_SLOTS = ['19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00', '22:30'];
+      const SHIFT_1_SLOTS = ['19:00', '19:30', '20:00', '20:30'];
+      const SHIFT_2_SLOTS = ['21:00', '21:30', '22:00', '22:30'];
+      const DAYS_IT = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+      const MONTHS_IT = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
+
+      function pad2(n) {
+        return String(n).padStart(2, '0');
+      }
+
+      function toISODateLocal(d) {
+        return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+      }
+
+      function getNextOpenDate(startDate) {
+        const d = new Date(startDate);
+        d.setHours(12, 0, 0, 0);
+        if (d.getDay() === 1) d.setDate(d.getDate() + 1);
+        return d;
+      }
+
+      function parseGuestSeats(guestVal) {
+        if (String(guestVal) === '8+') return 8;
+        const n = parseInt(guestVal, 10);
+        return Number.isFinite(n) && n > 0 ? n : 2;
+      }
+
+      const BookingStore = (function () {
+        const BOOKINGS_KEY = 'forno89_bookings_v1';
+        const SETTINGS_KEY = 'forno89_sala_settings_v1';
+        const CHANNEL_NAME = 'forno89_sala_sync_v1';
+        const ACTIVE_STATUSES = ['pending', 'confirmed', 'seated'];
+
+        const DEFAULT_SETTINGS = {
+          slotCapacity: 35,
+          isOnlineBookingOpen: true,
+          closedDates: [],
+          demoFullSlot: '21:00',
+          hostPin: '1989'
+        };
+
+        const channel = 'BroadcastChannel' in window ? new BroadcastChannel(CHANNEL_NAME) : null;
+        const listeners = new Set();
+
+        function buildSeedBookings() {
+          const d1 = getNextOpenDate(new Date());
+          const d2Base = new Date(d1);
+          d2Base.setDate(d1.getDate() + 1);
+          const d2 = getNextOpenDate(d2Base);
+          const iso1 = toISODateLocal(d1);
+          const iso2 = toISODateLocal(d2);
+          const nowIso = new Date().toISOString();
+
+          return [
+            {
+              id: 'seed-1',
+              code: '#F89-214',
+              date: iso1,
+              time: '19:30',
+              guests: '4',
+              guestCount: 4,
+              name: 'Marco Cattaneo',
+              phone: '+39 338 412 9081',
+              zone: 'Sala principale',
+              notes: 'Tavolo tranquillo vicino alla parete',
+              status: 'confirmed',
+              source: 'online',
+              createdAt: nowIso
+            },
+            {
+              id: 'seed-2',
+              code: '#F89-309',
+              date: iso1,
+              time: '20:00',
+              guests: '6',
+              guestCount: 6,
+              name: 'Elena Ferretti',
+              phone: '+39 347 905 1124',
+              zone: 'Vicino al forno a legna',
+              notes: 'Mozzarella senza lattosio per 1 ospite',
+              status: 'seated',
+              source: 'online',
+              createdAt: nowIso
+            },
+            {
+              id: 'seed-3',
+              code: '#F89-427',
+              date: iso1,
+              time: '20:30',
+              guests: '6',
+              guestCount: 6,
+              name: 'Luca e Giulia Rossi',
+              phone: '+39 339 771 4208',
+              zone: 'Sala principale',
+              notes: 'Seggiolone per bimbo',
+              status: 'pending',
+              source: 'online',
+              createdAt: nowIso
+            },
+            {
+              id: 'seed-4',
+              code: '#F89-512',
+              date: iso1,
+              time: '21:30',
+              guests: '4',
+              guestCount: 4,
+              name: 'Chiara Bergamaschi',
+              phone: '+39 320 684 3190',
+              zone: 'Dehors',
+              notes: 'Allergia frutta a guscio (noci/pistacchi)',
+              status: 'confirmed',
+              source: 'phone',
+              createdAt: nowIso
+            },
+            {
+              id: 'seed-5',
+              code: '#F89-618',
+              date: iso2,
+              time: '20:00',
+              guests: '4',
+              guestCount: 4,
+              name: 'Matteo Rinaldi',
+              phone: '+39 335 901 6642',
+              zone: 'Vicino al forno a legna',
+              notes: 'Compleanno, candelina sul dolce',
+              status: 'confirmed',
+              source: 'online',
+              createdAt: nowIso
+            },
+            {
+              id: 'seed-6',
+              code: '#F89-705',
+              date: iso2,
+              time: '20:30',
+              guests: '5',
+              guestCount: 5,
+              name: 'Sara Lombardi',
+              phone: '+39 348 229 5510',
+              zone: 'Sala principale',
+              notes: 'Impasto integrale se disponibile',
+              status: 'pending',
+              source: 'online',
+              createdAt: nowIso
+            }
+          ];
+        }
+
+        function safeReadJSON(key, fallback) {
+          try {
+            const raw = localStorage.getItem(key);
+            return raw ? JSON.parse(raw) : fallback;
+          } catch (err) {
+            return fallback;
+          }
+        }
+
+        function safeWriteJSON(key, val) {
+          try {
+            localStorage.setItem(key, JSON.stringify(val));
+          } catch (err) {
+            // Ignora errori quota/private mode
+          }
+        }
+
+        function ensureSeeded() {
+          if (localStorage.getItem(SETTINGS_KEY) === null) {
+            safeWriteJSON(SETTINGS_KEY, DEFAULT_SETTINGS);
+          }
+          if (localStorage.getItem(BOOKINGS_KEY) === null) {
+            safeWriteJSON(BOOKINGS_KEY, buildSeedBookings());
+          }
+        }
+
+        function notifyLocalAndTabs(reason) {
+          if (channel) {
+            try {
+              channel.postMessage({ type: 'SYNC', reason: reason || 'update', ts: Date.now() });
+            } catch (err) {
+              // Ignora se il canale è chiuso
+            }
+          }
+          listeners.forEach((fn) => fn(reason || 'update'));
+        }
+
+        if (channel) {
+          channel.onmessage = function (ev) {
+            if (ev && ev.data && ev.data.type === 'SYNC') {
+              listeners.forEach((fn) => fn(ev.data.reason || 'remote'));
+            }
+          };
+        }
+
+        window.addEventListener('storage', function (ev) {
+          if (ev.key === BOOKINGS_KEY || ev.key === SETTINGS_KEY) {
+            listeners.forEach((fn) => fn('storage'));
+          }
+        });
+
+        ensureSeeded();
+
+        return {
+          config: SUPABASE_CONFIG,
+          getSettings() {
+            const saved = safeReadJSON(SETTINGS_KEY, null);
+            return Object.assign({}, DEFAULT_SETTINGS, saved || {});
+          },
+          updateSettings(partial) {
+            const next = Object.assign({}, this.getSettings(), partial || {});
+            next.slotCapacity = Math.max(1, Math.min(300, parseInt(next.slotCapacity, 10) || DEFAULT_SETTINGS.slotCapacity));
+            safeWriteJSON(SETTINGS_KEY, next);
+            notifyLocalAndTabs('settings');
+            return next;
+          },
+          getBookings() {
+            const list = safeReadJSON(BOOKINGS_KEY, null);
+            if (!Array.isArray(list)) {
+              const seeded = buildSeedBookings();
+              safeWriteJSON(BOOKINGS_KEY, seeded);
+              return seeded;
+            }
+            return list;
+          },
+          generateUniqueCode() {
+            const existing = new Set(this.getBookings().map((b) => b.code));
+            for (let i = 0; i < 40; i++) {
+              const candidate = '#F89-' + String(Math.floor(100 + Math.random() * 900));
+              if (!existing.has(candidate)) return candidate;
+            }
+            return '#F89-' + String(Math.floor(1000 + Math.random() * 9000));
+          },
+          addBooking(payload) {
+            const list = this.getBookings();
+            const record = {
+              id: 'bk-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
+              code: payload.code || this.generateUniqueCode(),
+              date: payload.date,
+              time: payload.time,
+              guests: String(payload.guests || '2'),
+              guestCount: parseGuestSeats(payload.guests),
+              name: String(payload.name || '').trim(),
+              phone: String(payload.phone || '').trim(),
+              zone: payload.zone || 'Sala principale',
+              notes: String(payload.notes || '').trim(),
+              status: payload.status || 'confirmed',
+              source: payload.source || 'online',
+              createdAt: new Date().toISOString()
+            };
+            list.unshift(record);
+            safeWriteJSON(BOOKINGS_KEY, list);
+            notifyLocalAndTabs('booking_added');
+            return record;
+          },
+          isDateOnlineOpen(isoDate) {
+            const s = this.getSettings();
+            if (!s.isOnlineBookingOpen) return false;
+            if (Array.isArray(s.closedDates) && s.closedDates.includes(isoDate)) return false;
+            return true;
+          },
+          getSlotStats(isoDate, time, requestedSeats) {
+            const settings = this.getSettings();
+            const req = Number.isFinite(requestedSeats) ? requestedSeats : 2;
+            const bookings = this.getBookings();
+            let bookedSeats = 0;
+            let activeTables = 0;
+
+            for (const b of bookings) {
+              if (b.date === isoDate && b.time === time && ACTIVE_STATUSES.includes(b.status)) {
+                bookedSeats += parseGuestSeats(b.guestCount || b.guests);
+                activeTables += 1;
+              }
+            }
+
+            const cap = settings.slotCapacity;
+            const remaining = Math.max(0, cap - bookedSeats);
+            const isDemoFull = Boolean(settings.demoFullSlot && time === settings.demoFullSlot);
+            const isFull = isDemoFull || (bookedSeats + req > cap);
+            const isLow = !isFull && remaining <= 8;
+
+            return {
+              bookedSeats,
+              activeTables,
+              remaining,
+              slotCapacity: cap,
+              isDemoFull,
+              isFull,
+              isLow
+            };
+          },
+          subscribe(fn) {
+            listeners.add(fn);
+            return () => listeners.delete(fn);
+          }
+        };
+      })();
+
+      window.Forno89Store = BookingStore;
+
       const tfWidget = document.getElementById('tfWidget');
       const tfCardIntro = document.getElementById('tfCardIntro');
       const tfConfirmView = document.getElementById('tfConfirmView');
@@ -4586,7 +4983,10 @@
       const tfDateStrip = document.getElementById('tfDateStrip');
       const tfDatePrev = document.getElementById('tfDatePrev');
       const tfDateNext = document.getElementById('tfDateNext');
-      const tfSlotBtns = Array.from(document.querySelectorAll('.tf-slot-btn'));
+      const tfClosedBanner = document.getElementById('tfClosedBanner');
+      const tfStep3Active = document.getElementById('tfStep3Active');
+      const tfShift1Grid = document.getElementById('tfShift1Grid');
+      const tfShift2Grid = document.getElementById('tfShift2Grid');
       const tfZoneBtns = Array.from(document.querySelectorAll('.tf-zone-btn'));
 
       const tfTicketSummary = document.getElementById('tfTicketSummary');
@@ -4595,6 +4995,7 @@
       const tfPhone = document.getElementById('tfPhone');
       const tfNotes = document.getElementById('tfNotes');
       const tfFeedback = document.getElementById('tfFeedback');
+      const tfSubmitBtn = document.getElementById('tfSubmitBtn');
 
       const tfConfCode = document.getElementById('tfConfCode');
       const tfConfGuests = document.getElementById('tfConfGuests');
@@ -4607,13 +5008,6 @@
       const tfIcsBtn = document.getElementById('tfIcsBtn');
       const tfIcsFeedback = document.getElementById('tfIcsFeedback');
       const tfResetBtn = document.getElementById('tfResetBtn');
-
-      const DAYS_IT = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
-      const MONTHS_IT = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
-
-      function pad2(n) {
-        return String(n).padStart(2, '0');
-      }
 
       function buildUpcomingDays(count) {
         const list = [];
@@ -4640,8 +5034,8 @@
             shortLabel: DAYS_IT[dow] + ' ' + dayNum + ' ' + MONTHS_IT[month],
             compactLabel: DAYS_IT[dow] + ' ' + dayNum,
             fullLabel: DAYS_IT[dow] + ' ' + dayNum + ' ' + MONTHS_IT[month] + ' ' + year,
-            isClosed: dow === 1, // Chiuso il lunedì
-            isHighDemand: dow === 5 || dow === 6 // Alta richiesta Ven & Sab
+            isClosed: dow === 1,
+            isHighDemand: dow === 5 || dow === 6
           });
         }
         return list;
@@ -4677,22 +5071,115 @@
       }
 
       function updateBookingUI() {
-        // Stepper value labels
         if (tfStepVal1) tfStepVal1.textContent = bookingState.guests === '1' ? '1 pers.' : bookingState.guests + ' pers.';
         if (tfStepVal2 && bookingState.dateObj) tfStepVal2.textContent = bookingState.dateObj.compactLabel;
-        if (tfStepVal3) tfStepVal3.textContent = bookingState.time;
+        if (tfStepVal3) tfStepVal3.textContent = bookingState.time || '--';
 
-        // Ticket summary stub
         if (tfTicketSummary && bookingState.dateObj) {
+          const timeText = bookingState.time || 'Nessuno slot disponibile';
           tfTicketSummary.textContent =
             formatGuestsLabel(bookingState.guests) +
             ' \u00B7 ' +
             bookingState.dateObj.shortLabel +
             ' \u00B7 ' +
-            bookingState.time +
+            timeText +
             ' \u00B7 ' +
             bookingState.zone;
         }
+      }
+
+      function createSlotButton(time, stats, isSelected) {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'tf-slot-btn';
+        btn.dataset.time = time;
+
+        let tagHtml = '';
+        if (stats.isFull) {
+          btn.disabled = true;
+          btn.setAttribute('aria-disabled', 'true');
+          btn.setAttribute('aria-label', time + ' — Completo');
+          tagHtml = '<span class="tf-slot-tag tf-slot-tag--full">Completo</span>';
+        } else if (stats.isLow) {
+          btn.setAttribute('aria-label', time + ' — Ultimi posti (' + stats.remaining + ' rimasti)');
+          tagHtml = '<span class="tf-slot-tag tf-slot-tag--warn">Ultimi posti</span>';
+        } else {
+          btn.setAttribute('aria-label', time + ' — Disponibile (' + stats.remaining + ' posti)');
+        }
+
+        if (!stats.isFull && isSelected) {
+          btn.classList.add('is-selected');
+          btn.setAttribute('aria-pressed', 'true');
+        }
+
+        btn.innerHTML = '<span class="tf-slot-time">' + time + '</span>' + tagHtml;
+
+        if (!stats.isFull) {
+          btn.addEventListener('click', () => {
+            bookingState.time = time;
+            renderTimeSlots();
+          });
+        }
+        return btn;
+      }
+
+      function renderTimeSlots() {
+        if (!bookingState.dateObj) return;
+        const isoDate = bookingState.dateObj.iso;
+        const isOnlineOpen = BookingStore.isDateOnlineOpen(isoDate);
+
+        if (tfClosedBanner && tfStep3Active) {
+          tfClosedBanner.hidden = isOnlineOpen;
+          tfStep3Active.hidden = !isOnlineOpen;
+        }
+
+        if (!isOnlineOpen) {
+          updateBookingUI();
+          return;
+        }
+
+        const requestedSeats = parseGuestSeats(bookingState.guests);
+        const statsMap = {};
+        let firstAvailableTime = null;
+
+        ALL_SLOTS.forEach((slot) => {
+          const st = BookingStore.getSlotStats(isoDate, slot, requestedSeats);
+          statsMap[slot] = st;
+          if (!st.isFull && !firstAvailableTime) {
+            firstAvailableTime = slot;
+          }
+        });
+
+        // Se l'orario selezionato è diventato completo, passa al primo disponibile
+        if (!bookingState.time || !statsMap[bookingState.time] || statsMap[bookingState.time].isFull) {
+          bookingState.time = firstAvailableTime || '';
+        }
+
+        if (tfShift1Grid) {
+          tfShift1Grid.innerHTML = '';
+          SHIFT_1_SLOTS.forEach((slot) => {
+            tfShift1Grid.appendChild(createSlotButton(slot, statsMap[slot], bookingState.time === slot));
+          });
+        }
+
+        if (tfShift2Grid) {
+          tfShift2Grid.innerHTML = '';
+          SHIFT_2_SLOTS.forEach((slot) => {
+            tfShift2Grid.appendChild(createSlotButton(slot, statsMap[slot], bookingState.time === slot));
+          });
+        }
+
+        if (tfSubmitBtn) {
+          tfSubmitBtn.disabled = !bookingState.time;
+        }
+
+        if (!bookingState.time) {
+          setTfFeedback(tfFeedback, 'error', 'Tutti gli orari sono al completo per questo numero di ospiti nella data selezionata. Prova un\'altra data o chiamaci al +39 333 000 1122.');
+        } else if (tfFeedback && tfFeedback.textContent.includes('Tutti gli orari sono al completo')) {
+          setTfFeedback(tfFeedback, '', '');
+        }
+
+        updateBookingUI();
       }
 
       function goToBookingStep(stepNum) {
@@ -4711,7 +5198,11 @@
           panel.hidden = !isTarget;
         });
 
-        updateBookingUI();
+        if (stepNum === 3) {
+          renderTimeSlots();
+        } else {
+          updateBookingUI();
+        }
       }
 
       function renderDateStrip() {
@@ -4761,7 +5252,7 @@
                 b.classList.toggle('is-selected', active);
                 b.setAttribute('aria-pressed', String(active));
               });
-              updateBookingUI();
+              renderTimeSlots();
               goToBookingStep(3);
             });
           }
@@ -4813,7 +5304,7 @@
           timeParts[1],
           0
         );
-        const end = new Date(start.getTime() + 90 * 60 * 1000); // 90 minuti
+        const end = new Date(start.getTime() + 90 * 60 * 1000);
         const now = new Date();
 
         const descLines = [
@@ -4876,7 +5367,13 @@
 
       if (tfWidget) {
         renderDateStrip();
+        renderTimeSlots();
         updateBookingUI();
+
+        // Sincronizzazione in tempo reale da Area Host o altre schede
+        BookingStore.subscribe(() => {
+          renderTimeSlots();
+        });
 
         // Clickable Stepper Tabs
         tfStepTabs.forEach((tab) => {
@@ -4915,22 +5412,8 @@
               b.classList.toggle('is-selected', active);
               b.setAttribute('aria-pressed', String(active));
             });
-            updateBookingUI();
+            renderTimeSlots();
             goToBookingStep(2);
-          });
-        });
-
-        // Step 3: Time Slot Selection
-        tfSlotBtns.forEach((btn) => {
-          if (btn.disabled) return;
-          btn.addEventListener('click', () => {
-            bookingState.time = btn.dataset.time;
-            tfSlotBtns.forEach((b) => {
-              const active = b === btn;
-              b.classList.toggle('is-selected', active);
-              b.setAttribute('aria-pressed', String(active));
-            });
-            updateBookingUI();
           });
         });
 
@@ -4947,7 +5430,7 @@
           });
         });
 
-        // Step 3: Submit & Instant In-Page Confirmation
+        // Step 3: Submit -> Save in BookingStore + BroadcastChannel + Instant Confirmation
         if (tfDetailsForm) {
           tfDetailsForm.addEventListener('submit', (event) => {
             event.preventDefault();
@@ -4956,6 +5439,26 @@
             const nameVal = tfName ? tfName.value.trim() : '';
             const phoneVal = tfPhone ? tfPhone.value.trim() : '';
             const notesVal = tfNotes ? tfNotes.value.trim() : '';
+
+            if (!bookingState.dateObj || bookingState.dateObj.isClosed) {
+              bookingState.dateObj = firstOpenDay;
+            }
+
+            if (!BookingStore.isDateOnlineOpen(bookingState.dateObj.iso)) {
+              renderTimeSlots();
+              return;
+            }
+
+            const requestedSeats = parseGuestSeats(bookingState.guests);
+            const liveStats = bookingState.time
+              ? BookingStore.getSlotStats(bookingState.dateObj.iso, bookingState.time, requestedSeats)
+              : { isFull: true };
+
+            if (!bookingState.time || liveStats.isFull) {
+              setTfFeedback(tfFeedback, 'error', 'Questo orario è appena andato al completo. Seleziona un altro slot disponibile.');
+              renderTimeSlots();
+              return;
+            }
 
             if (nameVal.length < 2) {
               setTfFeedback(tfFeedback, 'error', 'Inserisci il tuo nome e cognome per confermare.');
@@ -4970,24 +5473,31 @@
               return;
             }
 
-            if (!bookingState.dateObj || bookingState.dateObj.isClosed) {
-              bookingState.dateObj = firstOpenDay;
-            }
-
-            const randomCode = '#F89-' + String(Math.floor(100 + Math.random() * 900));
-            const confirmed = {
-              code: randomCode,
-              guests: bookingState.guests,
-              dateObj: bookingState.dateObj,
+            // Salva nello store condiviso (localStorage + BroadcastChannel)
+            const savedRecord = BookingStore.addBooking({
+              date: bookingState.dateObj.iso,
               time: bookingState.time,
-              zone: bookingState.zone,
+              guests: bookingState.guests,
               name: nameVal,
               phone: phoneVal,
-              notes: notesVal
+              zone: bookingState.zone,
+              notes: notesVal,
+              status: 'confirmed',
+              source: 'online'
+            });
+
+            const confirmed = {
+              code: savedRecord.code,
+              guests: savedRecord.guests,
+              dateObj: bookingState.dateObj,
+              time: savedRecord.time,
+              zone: savedRecord.zone,
+              name: savedRecord.name,
+              phone: savedRecord.phone,
+              notes: savedRecord.notes
             };
             bookingState.lastConfirmed = confirmed;
 
-            // Populate Confirmation Screen
             if (tfConfCode) tfConfCode.textContent = confirmed.code;
             if (tfConfGuests) tfConfGuests.textContent = formatGuestsLabel(confirmed.guests);
             if (tfConfDateTime) tfConfDateTime.textContent = confirmed.dateObj.fullLabel + ' \u00B7 ' + confirmed.time;
@@ -5037,11 +5547,6 @@
               b.classList.toggle('is-selected', active);
               b.setAttribute('aria-pressed', String(active));
             });
-            tfSlotBtns.forEach((b) => {
-              const active = !b.disabled && b.dataset.time === '20:00';
-              b.classList.toggle('is-selected', active);
-              b.setAttribute('aria-pressed', String(active));
-            });
             tfZoneBtns.forEach((b) => {
               const active = b.dataset.zone === 'Sala principale';
               b.classList.toggle('is-selected', active);
@@ -5052,6 +5557,7 @@
             setTfFeedback(tfFeedback, '', '');
             setTfFeedback(tfIcsFeedback, '', '');
             renderDateStrip();
+            renderTimeSlots();
 
             if (tfConfirmView) tfConfirmView.classList.remove('is-active');
             if (tfCardIntro) tfCardIntro.hidden = false;

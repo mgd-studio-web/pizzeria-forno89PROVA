@@ -1,0 +1,2736 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Area Host · Gestione Sala — Pizzeria Forno 89</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#141210">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23141210'/%3E%3Cpath d='M32 14c7 8 13 15 13 24a13 13 0 1 1-26 0c0-9 6-16 13-24z' fill='%23c8372d'/%3E%3Cpath d='M32 27c3.5 4 6.5 7.5 6.5 12a6.5 6.5 0 1 1-13 0c0-4.5 3-8 6.5-12z' fill='%23d49b4b'/%3E%3C/svg%3E">
+
+  <style>
+    /* ==========================================================================
+       1. TOKENS & BASE
+       ========================================================================== */
+    :root {
+      --bg-flour: #faf8f5;
+      --bg-flour-alt: #f2ede5;
+      --bg-card: #ffffff;
+      --bg-charcoal: #141210;
+      --bg-charcoal-soft: #1f1b18;
+      --bg-charcoal-elevated: #28231f;
+
+      --accent-tomato: #c8372d;
+      --accent-tomato-hover: #ab2b22;
+      --accent-tomato-soft: rgba(200, 55, 45, 0.11);
+      --accent-copper: #d49b4b;
+      --accent-copper-hover: #c1893b;
+      --accent-copper-soft: rgba(212, 155, 75, 0.16);
+      --accent-green: #217346;
+      --accent-green-soft: rgba(33, 115, 70, 0.12);
+      --accent-amber: #a86414;
+      --accent-amber-soft: rgba(212, 155, 75, 0.22);
+
+      --text-ink: #1a1715;
+      --text-body: #3d3732;
+      --text-muted: #665d55;
+      --text-ivory: #f8f4ee;
+      --text-ivory-soft: #cfc7be;
+      --text-ivory-muted: #9e948a;
+
+      --border-light: rgba(26, 23, 21, 0.09);
+      --border-light-strong: rgba(26, 23, 21, 0.16);
+      --border-dark: rgba(248, 244, 238, 0.11);
+      --border-copper: rgba(212, 155, 75, 0.36);
+
+      --font-display: 'Fraunces', Georgia, serif;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 18px;
+      --radius-pill: 999px;
+
+      --shadow-sm: 0 2px 10px rgba(20, 18, 16, 0.05);
+      --shadow-md: 0 12px 30px rgba(20, 18, 16, 0.08);
+      --shadow-lg: 0 24px 56px rgba(0, 0, 0, 0.36);
+
+      --transition: 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      overflow-x: clip;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--text-ink);
+      background-color: var(--bg-flour);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+      min-height: 100vh;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    img, svg {
+      display: block;
+      max-width: 100%;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button, input, select {
+      font-family: inherit;
+      font-size: inherit;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent-copper);
+      outline-offset: 2px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1240px;
+      margin-inline: auto;
+      padding-inline: clamp(14px, 3.2vw, 28px);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 18px;
+      min-height: 44px;
+      border-radius: var(--radius-pill);
+      border: 1.5px solid transparent;
+      font-weight: 600;
+      font-size: 0.88rem;
+      line-height: 1.2;
+      cursor: pointer;
+      transition: all var(--transition);
+      text-align: center;
+    }
+
+    .btn svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .btn--primary {
+      background-color: var(--accent-tomato);
+      color: #ffffff;
+      box-shadow: 0 6px 18px rgba(200, 55, 45, 0.26);
+    }
+
+    .btn--primary:hover {
+      background-color: var(--accent-tomato-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn--copper {
+      background-color: var(--accent-copper);
+      color: #141210;
+    }
+
+    .btn--copper:hover {
+      background-color: var(--accent-copper-hover);
+    }
+
+    .btn--outline {
+      background-color: #ffffff;
+      color: var(--text-ink);
+      border-color: var(--border-light-strong);
+    }
+
+    .btn--outline:hover {
+      border-color: var(--bg-charcoal);
+      background-color: var(--bg-charcoal);
+      color: var(--text-ivory);
+    }
+
+    .btn--ghost-dark {
+      background-color: rgba(248, 244, 238, 0.08);
+      color: var(--text-ivory);
+      border-color: rgba(248, 244, 238, 0.16);
+    }
+
+    .btn--ghost-dark:hover {
+      background-color: rgba(248, 244, 238, 0.16);
+      border-color: var(--accent-copper);
+    }
+
+    .btn--sm {
+      min-height: 36px;
+      padding: 7px 12px;
+      font-size: 0.8rem;
+    }
+
+    .btn--full {
+      width: 100%;
+    }
+
+    /* Brand */
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      color: var(--text-ivory);
+      flex-shrink: 0;
+    }
+
+    .brand-mark {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: linear-gradient(145deg, #27211c, #141210);
+      border: 1px solid rgba(212, 155, 75, 0.42);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .brand-text {
+      font-family: var(--font-display);
+      font-size: 1.12rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .brand-text span {
+      color: var(--accent-copper);
+      font-style: italic;
+      font-weight: 500;
+    }
+
+    /* ==========================================================================
+       2. PIN GATE (SCHERMATA ACCESSO HOST)
+       ========================================================================== */
+    .pin-gate {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(200, 55, 45, 0.18), transparent 45%),
+        radial-gradient(circle at 80% 80%, rgba(212, 155, 75, 0.14), transparent 45%),
+        var(--bg-charcoal);
+      color: var(--text-ivory);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 14px;
+    }
+
+    .pin-card {
+      width: 100%;
+      max-width: 400px;
+      background-color: var(--bg-charcoal-soft);
+      border: 1px solid var(--border-copper);
+      border-radius: var(--radius-lg);
+      padding: clamp(24px, 5vw, 34px);
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      text-align: center;
+    }
+
+    .pin-card .brand {
+      justify-content: center;
+    }
+
+    .pin-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      align-self: center;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      background-color: var(--accent-copper-soft);
+      color: #f3d7aa;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .pin-card h1 {
+      font-family: var(--font-display);
+      font-size: 1.65rem;
+      font-weight: 600;
+      margin: 0;
+      line-height: 1.2;
+      color: #ffffff;
+    }
+
+    .pin-card p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--text-ivory-soft);
+    }
+
+    .pin-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .pin-input {
+      width: 100%;
+      min-width: 0;
+      min-height: 54px;
+      border-radius: 12px;
+      border: 1.5px solid rgba(248, 244, 238, 0.2);
+      background-color: var(--bg-charcoal);
+      color: #ffffff;
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: 0.45em;
+      text-align: center;
+      padding: 10px 16px 10px 24px;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .pin-input:focus {
+      outline: none;
+      border-color: var(--accent-copper);
+      box-shadow: 0 0 0 3px rgba(212, 155, 75, 0.22);
+    }
+
+    .pin-error {
+      margin: 0;
+      padding: 9px 12px;
+      border-radius: 10px;
+      background-color: rgba(200, 55, 45, 0.2);
+      border: 1px solid rgba(200, 55, 45, 0.45);
+      color: #ffb8b2;
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    .pin-hint {
+      font-size: 0.8rem;
+      color: var(--text-ivory-muted);
+      padding-top: 8px;
+      border-top: 1px solid var(--border-dark);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .pin-hint code {
+      background-color: rgba(212, 155, 75, 0.16);
+      color: #f3d7aa;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-family: var(--font-sans);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .pin-back-link {
+      font-size: 0.8rem;
+      color: var(--text-ivory-soft);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .pin-back-link:hover {
+      color: var(--accent-copper);
+    }
+
+    /* ==========================================================================
+       3. ADMIN HEADER
+       ========================================================================== */
+    .admin-header {
+      position: sticky;
+      top: 0;
+      z-index: 500;
+      background-color: rgba(20, 18, 16, 0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(212, 155, 75, 0.24);
+      padding-block: 12px;
+    }
+
+    .admin-header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .admin-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      min-width: 0;
+    }
+
+    .host-pill {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 3px 9px;
+      border-radius: var(--radius-pill);
+      background-color: var(--accent-copper-soft);
+      color: #f3d7aa;
+      border: 1px solid rgba(212, 155, 75, 0.35);
+      white-space: nowrap;
+    }
+
+    .sync-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #9de2b8;
+      white-space: nowrap;
+    }
+
+    .sync-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background-color: #38c172;
+      box-shadow: 0 0 0 3px rgba(56, 193, 114, 0.22);
+    }
+
+    .admin-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* ==========================================================================
+       4. MAIN DASHBOARD LAYOUT
+       ========================================================================== */
+    .admin-main {
+      padding-block: clamp(20px, 3.5vw, 34px) 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    /* Top Service Bar */
+    .service-bar {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: clamp(16px, 2.5vw, 22px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    @media (min-width: 820px) {
+      .service-bar {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+      }
+    }
+
+    .service-bar-title h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.35rem, 3vw, 1.8rem);
+      font-weight: 600;
+      margin: 0 0 3px;
+      line-height: 1.2;
+    }
+
+    .service-bar-title p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .service-bar-controls {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .date-shortcut {
+      appearance: none;
+      border: 1.5px solid var(--border-light-strong);
+      background-color: var(--bg-flour);
+      color: var(--text-ink);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 8px 13px;
+      min-height: 40px;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .date-shortcut:hover {
+      border-color: var(--accent-copper);
+    }
+
+    .date-shortcut.is-active {
+      background-color: var(--bg-charcoal);
+      border-color: var(--bg-charcoal);
+      color: #ffffff;
+    }
+
+    .admin-date-input {
+      min-width: 0;
+      max-width: 100%;
+      min-height: 40px;
+      padding: 7px 11px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border-light-strong);
+      background-color: var(--bg-flour);
+      color: var(--text-ink);
+      font-size: 0.86rem;
+      font-weight: 600;
+    }
+
+    .admin-date-input:focus {
+      outline: none;
+      border-color: var(--accent-tomato);
+      background-color: #ffffff;
+    }
+
+    /* KPI Strip */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    @media (min-width: 820px) {
+      .kpi-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+      }
+    }
+
+    .kpi-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 15px 14px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .kpi-card--accent {
+      background-color: var(--bg-charcoal);
+      color: var(--text-ivory);
+      border-color: rgba(212, 155, 75, 0.3);
+    }
+
+    .kpi-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--text-muted);
+    }
+
+    .kpi-card--accent .kpi-label {
+      color: var(--accent-copper);
+    }
+
+    .kpi-value {
+      font-family: var(--font-display);
+      font-size: clamp(1.32rem, 2.8vw, 1.85rem);
+      font-weight: 600;
+      line-height: 1.15;
+      font-variant-numeric: tabular-nums;
+      color: var(--text-ink);
+    }
+
+    .kpi-card--accent .kpi-value {
+      color: #ffffff;
+    }
+
+    .kpi-sub {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    .kpi-card--accent .kpi-sub {
+      color: var(--text-ivory-soft);
+    }
+
+    /* Main Workspace Grid */
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    @media (min-width: 980px) {
+      .workspace-grid {
+        grid-template-columns: minmax(0, 1.55fr) minmax(0, 0.75fr);
+        gap: 24px;
+      }
+    }
+
+    .panel-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: clamp(16px, 2.5vw, 24px);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .panel-card--dark {
+      background-color: var(--bg-charcoal);
+      color: var(--text-ivory);
+      border-color: rgba(212, 155, 75, 0.25);
+      box-shadow: var(--shadow-md);
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .panel-head h2 {
+      font-family: var(--font-display);
+      font-size: 1.24rem;
+      font-weight: 600;
+      margin: 0;
+      line-height: 1.25;
+    }
+
+    .panel-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .panel-card--dark .panel-sub {
+      color: var(--text-ivory-muted);
+    }
+
+    /* Slot Occupancy Overview (19:00 - 22:30) */
+    .slots-overview-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (min-width: 620px) {
+      .slots-overview-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    .slot-stat-card {
+      appearance: none;
+      width: 100%;
+      text-align: left;
+      background-color: var(--bg-flour);
+      border: 1.5px solid var(--border-light);
+      border-radius: 12px;
+      padding: 11px 10px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: all var(--transition);
+      min-width: 0;
+    }
+
+    .slot-stat-card:hover {
+      border-color: var(--accent-copper);
+      background-color: #ffffff;
+    }
+
+    .slot-stat-card.is-filtered {
+      border-color: var(--accent-tomato);
+      background-color: #ffffff;
+      box-shadow: 0 4px 14px rgba(200, 55, 45, 0.14);
+    }
+
+    .slot-stat-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .slot-stat-time {
+      font-weight: 700;
+      font-size: 0.94rem;
+      color: var(--text-ink);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .slot-stat-ratio {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-body);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .slot-bar-track {
+      width: 100%;
+      height: 7px;
+      border-radius: 999px;
+      background-color: rgba(26, 23, 21, 0.09);
+      overflow: hidden;
+    }
+
+    .slot-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background-color: var(--accent-copper);
+      transition: width 0.35s ease, background-color 0.25s ease;
+    }
+
+    .slot-bar-fill--warn {
+      background-color: #d9822b;
+    }
+
+    .slot-bar-fill--full {
+      background-color: var(--accent-tomato);
+    }
+
+    .slot-stat-foot {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .slot-stat-foot--warn {
+      color: var(--accent-amber);
+    }
+
+    .slot-stat-foot--full {
+      color: var(--accent-tomato);
+    }
+
+    /* Filter Toolbar & Search */
+    .filters-toolbar {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .status-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .filter-pill {
+      appearance: none;
+      border: 1px solid var(--border-light-strong);
+      background-color: var(--bg-flour);
+      color: var(--text-body);
+      border-radius: var(--radius-pill);
+      padding: 6px 12px;
+      min-height: 36px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all var(--transition);
+    }
+
+    .filter-pill:hover {
+      border-color: var(--accent-copper);
+    }
+
+    .filter-pill.is-active {
+      background-color: var(--bg-charcoal);
+      border-color: var(--bg-charcoal);
+      color: #ffffff;
+    }
+
+    .filter-count {
+      font-size: 0.7rem;
+      padding: 1px 6px;
+      border-radius: 999px;
+      background-color: rgba(26, 23, 21, 0.08);
+    }
+
+    .filter-pill.is-active .filter-count {
+      background-color: rgba(212, 155, 75, 0.26);
+      color: #f3d7aa;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .search-input-wrap {
+      position: relative;
+      flex: 1 1 200px;
+      min-width: 0;
+    }
+
+    .search-input-wrap svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      min-width: 0;
+      min-height: 42px;
+      padding: 9px 12px 9px 36px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border-light-strong);
+      background-color: var(--bg-flour);
+      color: var(--text-ink);
+      font-size: 0.88rem;
+    }
+
+    .search-input:focus {
+      outline: none;
+      background-color: #ffffff;
+      border-color: var(--accent-tomato);
+    }
+
+    /* Bookings List Cards */
+    .bookings-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .booking-row {
+      background-color: var(--bg-flour);
+      border: 1px solid var(--border-light-strong);
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+
+    .booking-row:hover {
+      border-color: rgba(212, 155, 75, 0.55);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .booking-row.is-cancelled {
+      opacity: 0.72;
+      background-color: #f4f1ec;
+      border-style: dashed;
+    }
+
+    .booking-row-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .booking-row-badges {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .time-badge {
+      font-weight: 700;
+      font-size: 0.86rem;
+      font-variant-numeric: tabular-nums;
+      background-color: var(--bg-charcoal);
+      color: #ffffff;
+      padding: 3px 9px;
+      border-radius: 8px;
+    }
+
+    .code-badge {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--text-ink);
+      background-color: #ffffff;
+      border: 1px solid var(--border-light-strong);
+      padding: 2px 8px;
+      border-radius: 8px;
+    }
+
+    .guests-badge {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--accent-tomato);
+      background-color: var(--accent-tomato-soft);
+      padding: 3px 8px;
+      border-radius: 8px;
+    }
+
+    .source-tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      padding: 2px 7px;
+      border-radius: 6px;
+      border: 1px solid var(--border-light-strong);
+      background-color: #ffffff;
+    }
+
+    .status-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 3px 9px;
+      border-radius: var(--radius-pill);
+    }
+
+    .status-badge--confirmed {
+      background-color: var(--accent-green-soft);
+      color: var(--accent-green);
+    }
+
+    .status-badge--pending {
+      background-color: var(--accent-amber-soft);
+      color: var(--accent-amber);
+    }
+
+    .status-badge--seated {
+      background-color: var(--bg-charcoal);
+      color: var(--accent-copper);
+    }
+
+    .status-badge--cancelled {
+      background-color: var(--accent-tomato-soft);
+      color: #a62b22;
+    }
+
+    .booking-row-main {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .booking-customer-line {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 4px 14px;
+    }
+
+    .booking-customer-name {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-ink);
+    }
+
+    .booking-row.is-cancelled .booking-customer-name {
+      text-decoration: line-through;
+    }
+
+    .booking-phone {
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--accent-tomato);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .booking-zone {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .booking-notes {
+      margin-top: 4px;
+      padding: 7px 10px;
+      border-radius: 9px;
+      background-color: rgba(212, 155, 75, 0.14);
+      border: 1px solid rgba(212, 155, 75, 0.36);
+      font-size: 0.82rem;
+      color: #5c3d10;
+      word-break: break-word;
+    }
+
+    .booking-notes strong {
+      color: #3f2807;
+    }
+
+    .booking-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--border-light-strong);
+    }
+
+    .act-btn {
+      appearance: none;
+      border: 1px solid var(--border-light-strong);
+      background-color: #ffffff;
+      color: var(--text-ink);
+      border-radius: 9px;
+      padding: 7px 11px;
+      min-height: 36px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all var(--transition);
+    }
+
+    .act-btn:hover {
+      border-color: var(--bg-charcoal);
+      background-color: var(--bg-charcoal);
+      color: #ffffff;
+    }
+
+    .act-btn--seated {
+      background-color: var(--bg-charcoal);
+      border-color: var(--bg-charcoal);
+      color: #f3d7aa;
+    }
+
+    .act-btn--seated:hover {
+      background-color: #2e2823;
+      color: #ffffff;
+    }
+
+    .act-btn--confirm {
+      border-color: rgba(33, 115, 70, 0.35);
+      color: var(--accent-green);
+      background-color: rgba(33, 115, 70, 0.06);
+    }
+
+    .act-btn--confirm:hover {
+      background-color: var(--accent-green);
+      border-color: var(--accent-green);
+      color: #ffffff;
+    }
+
+    .act-btn--cancel {
+      border-color: rgba(200, 55, 45, 0.32);
+      color: #a62b22;
+      background-color: rgba(200, 55, 45, 0.05);
+    }
+
+    .act-btn--cancel:hover {
+      background-color: var(--accent-tomato);
+      border-color: var(--accent-tomato);
+      color: #ffffff;
+    }
+
+    .act-btn--wa {
+      border-color: rgba(212, 155, 75, 0.55);
+      background-color: rgba(212, 155, 75, 0.14);
+      color: #5d3e10;
+    }
+
+    .act-btn--wa:hover {
+      background-color: var(--accent-copper);
+      border-color: var(--accent-copper);
+      color: #141210;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 30px 16px;
+      border-radius: 14px;
+      background-color: var(--bg-flour);
+      border: 1px dashed var(--border-light-strong);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* ==========================================================================
+       5. CONTROLLI SALA (RIGHT DARK PANEL)
+       ========================================================================== */
+    .control-group {
+      background-color: var(--bg-charcoal-soft);
+      border: 1px solid var(--border-dark);
+      border-radius: 13px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .control-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .control-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 2px;
+    }
+
+    .control-desc {
+      font-size: 0.78rem;
+      color: var(--text-ivory-muted);
+      margin: 0;
+      line-height: 1.45;
+    }
+
+    /* Toggle Switch */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 28px;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .switch-slider {
+      position: absolute;
+      inset: 0;
+      cursor: pointer;
+      background-color: #463e37;
+      border-radius: 999px;
+      transition: background-color 0.22s ease;
+    }
+
+    .switch-slider::before {
+      content: "";
+      position: absolute;
+      height: 22px;
+      width: 22px;
+      left: 3px;
+      bottom: 3px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      transition: transform 0.22s ease;
+    }
+
+    .switch input:checked + .switch-slider {
+      background-color: #2d9a5b;
+    }
+
+    .switch input:checked + .switch-slider::before {
+      transform: translateX(22px);
+    }
+
+    .switch input:focus-visible + .switch-slider {
+      outline: 2px solid var(--accent-copper);
+      outline-offset: 2px;
+    }
+
+    .online-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      align-self: flex-start;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+
+    .online-status-pill--open {
+      background-color: rgba(45, 154, 91, 0.18);
+      color: #8ee5b0;
+    }
+
+    .online-status-pill--closed {
+      background-color: rgba(200, 55, 45, 0.24);
+      color: #ffb0aa;
+    }
+
+    .cap-input-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .cap-step-btn {
+      width: 38px;
+      height: 40px;
+      border-radius: 9px;
+      border: 1px solid rgba(248, 244, 238, 0.2);
+      background-color: var(--bg-charcoal);
+      color: var(--text-ivory);
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all var(--transition);
+    }
+
+    .cap-step-btn:hover {
+      border-color: var(--accent-copper);
+      color: var(--accent-copper);
+    }
+
+    .cap-input {
+      flex: 1 1 60px;
+      min-width: 0;
+      min-height: 40px;
+      border-radius: 9px;
+      border: 1.5px solid rgba(248, 244, 238, 0.2);
+      background-color: var(--bg-charcoal);
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 700;
+      text-align: center;
+      padding: 6px 8px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .cap-input:focus {
+      outline: none;
+      border-color: var(--accent-copper);
+    }
+
+    /* ==========================================================================
+       6. MODAL "+ NUOVA PRENOTAZIONE TELEFONICA"
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 1200;
+      background-color: rgba(14, 12, 10, 0.78);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 520px;
+      max-height: 92vh;
+      overflow-y: auto;
+      background-color: var(--bg-card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-light);
+      box-shadow: var(--shadow-lg);
+      padding: clamp(18px, 3.5vw, 26px);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .modal-head h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border-light-strong);
+      background-color: var(--bg-flour);
+      color: var(--text-ink);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      background-color: var(--accent-tomato);
+      border-color: var(--accent-tomato);
+      color: #ffffff;
+    }
+
+    .modal-form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 480px) {
+      .modal-form-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .field--full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-body);
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      min-height: 44px;
+      padding: 9px 12px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border-light-strong);
+      background-color: var(--bg-flour);
+      color: var(--text-ink);
+      font-size: 0.9rem;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      outline: none;
+      background-color: #ffffff;
+      border-color: var(--accent-tomato);
+    }
+
+    .modal-slot-hint {
+      font-size: 0.8rem;
+      padding: 9px 11px;
+      border-radius: 9px;
+      background-color: var(--bg-flour);
+      border: 1px dashed rgba(212, 155, 75, 0.55);
+      color: var(--text-body);
+    }
+
+    .modal-feedback {
+      margin: 0;
+      padding: 9px 11px;
+      border-radius: 9px;
+      background-color: var(--accent-tomato-soft);
+      color: #a3251d;
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    /* Live Toast */
+    .toast {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      z-index: 1400;
+      max-width: calc(100vw - 32px);
+      padding: 11px 16px;
+      border-radius: 12px;
+      background-color: var(--bg-charcoal);
+      color: var(--text-ivory);
+      border: 1px solid var(--accent-copper);
+      box-shadow: var(--shadow-lg);
+      font-size: 0.84rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    .toast.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--accent-copper);
+      flex-shrink: 0;
+    }
+
+    /* Admin Footer */
+    .admin-footer {
+      border-top: 1px solid var(--border-light);
+      padding-block: 18px 26px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .admin-footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px 16px;
+    }
+
+    .admin-footer a {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      font-weight: 600;
+    }
+
+    .admin-footer a:hover {
+      color: var(--accent-tomato);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========================================================================
+       SCHERMATA DI ACCESSO CON PIN (1989)
+       ======================================================================== -->
+  <section class="pin-gate" id="pinGate" aria-labelledby="pinHeading">
+    <div class="pin-card">
+      <a href="index.html" class="brand" aria-label="Pizzeria Forno 89">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2.5C15.8 6.8 19 10.6 19 15a7 7 0 1 1-14 0c0-4.4 3.2-8.2 7-12.5Z" fill="#c8372d"/>
+            <path d="M12 10.2c2 2.2 3.5 4.2 3.5 6.4a3.5 3.5 0 1 1-7 0c0-2.2 1.5-4.2 3.5-6.4Z" fill="#d49b4b"/>
+          </svg>
+        </span>
+        <span class="brand-text">FORNO <span>89</span></span>
+      </a>
+
+      <span class="pin-badge">Area Host &middot; Gestione Sala</span>
+
+      <div>
+        <h1 id="pinHeading">Accesso Staff</h1>
+        <p style="margin-top: 6px;">Inserisci il PIN del locale per gestire prenotazioni, coperti e disponibilit&agrave; in tempo reale.</p>
+      </div>
+
+      <form class="pin-form" id="pinForm" novalidate>
+        <label for="pinInput" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Codice PIN</label>
+        <input
+          type="password"
+          id="pinInput"
+          class="pin-input"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          maxlength="4"
+          placeholder="&bull;&bull;&bull;&bull;"
+          autocomplete="off"
+          required
+        >
+        <p class="pin-error" id="pinError" hidden role="alert">PIN non corretto. Inserisci il PIN demo 1989.</p>
+        <button type="submit" class="btn btn--primary btn--full">Accedi al pannello</button>
+      </form>
+
+      <div class="pin-hint">
+        <span>PIN demo: <code>1989</code></span>
+        <a href="index.html" class="pin-back-link">&larr; Torna al sito pubblico</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================
+       PANNELLO HOST / GESTIONE SALA
+       ======================================================================== -->
+  <div id="adminApp" hidden>
+    <header class="admin-header">
+      <div class="container admin-header-inner">
+        <div class="admin-header-left">
+          <a href="index.html" class="brand" aria-label="Pizzeria Forno 89 — Vai al sito">
+            <span class="brand-mark" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2.5C15.8 6.8 19 10.6 19 15a7 7 0 1 1-14 0c0-4.4 3.2-8.2 7-12.5Z" fill="#c8372d"/>
+                <path d="M12 10.2c2 2.2 3.5 4.2 3.5 6.4a3.5 3.5 0 1 1-7 0c0-2.2 1.5-4.2 3.5-6.4Z" fill="#d49b4b"/>
+              </svg>
+            </span>
+            <span class="brand-text">FORNO <span>89</span></span>
+          </a>
+          <span class="host-pill">Area Host</span>
+          <span class="sync-pill" title="Sincronizzazione live con il sito pubblico">
+            <span class="sync-dot" aria-hidden="true"></span>
+            Sync live
+          </span>
+        </div>
+
+        <div class="admin-header-actions">
+          <a href="index.html" class="btn btn--ghost-dark btn--sm">Sito</a>
+          <button type="button" class="btn btn--ghost-dark btn--sm" id="lockBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            Esci / Blocca
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container admin-main">
+      <!-- Service Date Bar + New Phone Booking CTA -->
+      <section class="service-bar" aria-label="Selezione serata e nuova prenotazione">
+        <div class="service-bar-title">
+          <h1 id="selectedDateHeading">Servizio serale</h1>
+          <p id="selectedDateSub">Gestione sala e coperti in tempo reale &middot; Via Sopramuro 42, Piacenza</p>
+        </div>
+
+        <div class="service-bar-controls">
+          <button type="button" class="date-shortcut" id="btnToday">Oggi</button>
+          <button type="button" class="date-shortcut" id="btnTomorrow">Domani</button>
+          <input type="date" id="adminDateInput" class="admin-date-input" aria-label="Seleziona data servizio">
+          <button type="button" class="btn btn--primary btn--sm" id="openPhoneModalBtn" style="min-height: 40px; padding: 8px 15px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Nuova prenotazione telefonica
+          </button>
+        </div>
+      </section>
+
+      <!-- KPI Dashboard -->
+      <section class="kpi-grid" aria-label="Indicatori chiave della serata">
+        <div class="kpi-card kpi-card--accent">
+          <span class="kpi-label">Coperti / Capienza</span>
+          <div class="kpi-value" id="kpiSeats">0 / 280</div>
+          <span class="kpi-sub" id="kpiSeatsPct">0% occupazione serale</span>
+        </div>
+
+        <div class="kpi-card">
+          <span class="kpi-label">Tavoli attivi</span>
+          <div class="kpi-value" id="kpiActiveTables">0</div>
+          <span class="kpi-sub" id="kpiCancelledNote">0 annullate</span>
+        </div>
+
+        <div class="kpi-card">
+          <span class="kpi-label">Confermati / Attesa</span>
+          <div class="kpi-value" id="kpiConfPending">0 / 0</div>
+          <span class="kpi-sub">Confermate &middot; In attesa</span>
+        </div>
+
+        <div class="kpi-card">
+          <span class="kpi-label">Arrivati in sala</span>
+          <div class="kpi-value" id="kpiSeated">0</div>
+          <span class="kpi-sub" id="kpiSeatedSeats">0 coperti al tavolo</span>
+        </div>
+      </section>
+
+      <!-- Workspace: Left (Slots + Bookings List) & Right (Controlli Sala) -->
+      <div class="workspace-grid">
+        <div style="display: flex; flex-direction: column; gap: 20px; min-width: 0;">
+          <!-- Per-Slot Occupancy Overview -->
+          <section class="panel-card" aria-labelledby="slotsHeading">
+            <div class="panel-head">
+              <div>
+                <h2 id="slotsHeading">Occupazione per fascia oraria</h2>
+                <span class="panel-sub" id="slotsSubHint">Clicca una fascia per filtrare l'elenco sottostante.</span>
+              </div>
+              <button type="button" class="btn btn--outline btn--sm" id="clearTimeFilterBtn" hidden>Mostra tutti gli orari</button>
+            </div>
+            <div class="slots-overview-grid" id="slotsOverviewGrid"></div>
+          </section>
+
+          <!-- Reservations List & 1-Tap Actions -->
+          <section class="panel-card" aria-labelledby="bookingsHeading">
+            <div class="panel-head">
+              <div>
+                <h2 id="bookingsHeading">Prenotazioni della serata</h2>
+                <span class="panel-sub" id="bookingsCountLabel">0 prenotazioni visualizzate</span>
+              </div>
+            </div>
+
+            <div class="filters-toolbar">
+              <div class="status-filters" id="statusFilters" role="tablist" aria-label="Filtra per stato">
+                <button type="button" class="filter-pill is-active" data-status="all" role="tab" aria-selected="true">Tutte <span class="filter-count" data-count="all">0</span></button>
+                <button type="button" class="filter-pill" data-status="confirmed" role="tab" aria-selected="false">Confermate <span class="filter-count" data-count="confirmed">0</span></button>
+                <button type="button" class="filter-pill" data-status="pending" role="tab" aria-selected="false">In attesa <span class="filter-count" data-count="pending">0</span></button>
+                <button type="button" class="filter-pill" data-status="seated" role="tab" aria-selected="false">Arrivate <span class="filter-count" data-count="seated">0</span></button>
+                <button type="button" class="filter-pill" data-status="cancelled" role="tab" aria-selected="false">Annullate <span class="filter-count" data-count="cancelled">0</span></button>
+              </div>
+
+              <div class="search-row">
+                <div class="search-input-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  <input type="search" id="searchInput" class="search-input" placeholder="Cerca nome o codice #F89">
+                </div>
+              </div>
+            </div>
+
+            <div class="bookings-list" id="bookingsList"></div>
+          </section>
+        </div>
+
+        <!-- Controlli Sala (Right Sidebar) -->
+        <aside class="panel-card panel-card--dark" aria-labelledby="controlsHeading">
+          <div class="panel-head">
+            <div>
+              <h2 id="controlsHeading" style="color: #ffffff;">Controlli Sala</h2>
+              <span class="panel-sub">Modifiche salvate e sincronizzate live con il sito.</span>
+            </div>
+          </div>
+
+          <!-- Toggle Online Bookings Open / Closed -->
+          <div class="control-group">
+            <div class="control-row">
+              <div>
+                <h3 class="control-title">Prenotazioni online</h3>
+                <p class="control-desc">Attiva o sospendi le prenotazioni dal widget sul sito.</p>
+              </div>
+              <label class="switch" aria-label="Prenotazioni online aperte o chiuse">
+                <input type="checkbox" id="toggleOnlineBooking" checked>
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+            <span class="online-status-pill online-status-pill--open" id="onlineStatusPill">Prenotazioni online aperte</span>
+          </div>
+
+          <!-- Slot Capacity Control -->
+          <div class="control-group">
+            <div>
+              <h3 class="control-title">Capienza per slot</h3>
+              <p class="control-desc">Coperti massimi prenotabili per ogni fascia oraria (19:00&ndash;22:30).</p>
+            </div>
+            <div class="cap-input-row">
+              <button type="button" class="cap-step-btn" id="capMinusBtn" aria-label="Riduci capienza di 5">&minus;5</button>
+              <input type="number" id="inputSlotCapacity" class="cap-input" min="1" max="300" value="35" aria-label="Capienza massima per slot">
+              <button type="button" class="cap-step-btn" id="capPlusBtn" aria-label="Aumenta capienza di 5">+5</button>
+            </div>
+            <button type="button" class="btn btn--copper btn--sm btn--full" id="saveCapacityBtn">Salva capienza e ricalcola</button>
+          </div>
+
+          <!-- Demo Full 21:00 Toggle -->
+          <div class="control-group">
+            <div class="control-row">
+              <div>
+                <h3 class="control-title">Slot 21:00 completo (demo)</h3>
+                <p class="control-desc">Mostra lo slot delle 21:00 come pieno sul sito pubblico a scopo dimostrativo.</p>
+              </div>
+              <label class="switch" aria-label="Blocca slot 21:00 come completo dimostrativo">
+                <input type="checkbox" id="toggleDemo21" checked>
+                <span class="switch-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Demo Reset Utility -->
+          <div class="control-group" style="background-color: transparent; border-style: dashed;">
+            <p class="control-desc">Vuoi tornare allo stato iniziale con le 6 prenotazioni demo e 35 coperti per slot?</p>
+            <button type="button" class="btn btn--ghost-dark btn--sm btn--full" id="resetDemoBtn">Ripristina dati dimostrativi</button>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="admin-footer">
+      <div class="container admin-footer-inner">
+        <span>&copy; 2026 Pizzeria Forno 89 &mdash; Area Host dimostrativa (dati fittizi, pronto per Supabase)</span>
+        <span>Sito dimostrativo realizzato da <strong>MGD Studio</strong> &middot; <a href="index.html">Torna al sito</a></span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ========================================================================
+       MODALE "+ NUOVA PRENOTAZIONE TELEFONICA"
+       ======================================================================== -->
+  <div class="modal-backdrop" id="phoneModal" role="dialog" aria-modal="true" aria-labelledby="phoneModalHeading" hidden>
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="phoneModalHeading">Nuova prenotazione telefonica</h3>
+        <button type="button" class="modal-close" id="closePhoneModalBtn" aria-label="Chiudi modale">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"></line><line x1="18" y1="6" x2="6" y2="18"></line></svg>
+        </button>
+      </div>
+
+      <form id="phoneBookingForm" novalidate style="display: flex; flex-direction: column; gap: 14px;">
+        <div class="modal-form-grid">
+          <div class="field">
+            <label for="pmDate">Data *</label>
+            <input type="date" id="pmDate" required>
+          </div>
+          <div class="field">
+            <label for="pmTime">Orario *</label>
+            <select id="pmTime" required>
+              <option value="19:00">19:00</option>
+              <option value="19:30">19:30</option>
+              <option value="20:00" selected>20:00</option>
+              <option value="20:30">20:30</option>
+              <option value="21:00">21:00</option>
+              <option value="21:30">21:30</option>
+              <option value="22:00">22:00</option>
+              <option value="22:30">22:30</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="pmGuests">Persone *</label>
+            <select id="pmGuests" required>
+              <option value="1">1 persona</option>
+              <option value="2" selected>2 persone</option>
+              <option value="3">3 persone</option>
+              <option value="4">4 persone</option>
+              <option value="5">5 persone</option>
+              <option value="6">6 persone</option>
+              <option value="7">7 persone</option>
+              <option value="8+">8+ persone</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="pmZone">Zona</label>
+            <select id="pmZone">
+              <option value="Sala principale" selected>Sala principale</option>
+              <option value="Vicino al forno a legna">Vicino al forno a legna</option>
+              <option value="Dehors">Dehors</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="pmName">Nome e Cognome *</label>
+            <input type="text" id="pmName" placeholder="Es. Davide Galli" required>
+          </div>
+          <div class="field">
+            <label for="pmPhone">Telefono *</label>
+            <input type="tel" id="pmPhone" placeholder="Es. +39 333 456 7890" required>
+          </div>
+          <div class="field">
+            <label for="pmStatus">Stato iniziale</label>
+            <select id="pmStatus">
+              <option value="confirmed" selected>Confermata</option>
+              <option value="pending">In attesa</option>
+              <option value="seated">Gi&agrave; in sala</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="pmNotes">Note / Allergie</label>
+            <input type="text" id="pmNotes" placeholder="Es. Seggiolone, senza glutine">
+          </div>
+        </div>
+
+        <div class="modal-slot-hint" id="pmSlotHint">Disponibilit&agrave; fascia selezionata: --</div>
+        <p class="modal-feedback" id="pmFeedback" hidden role="alert"></p>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end; flex-wrap: wrap;">
+          <button type="button" class="btn btn--outline btn--sm" id="cancelPhoneModalBtn">Annulla</button>
+          <button type="submit" class="btn btn--primary btn--sm" style="min-height: 42px; padding: 10px 20px;">Salva prenotazione</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Live Sync Toast -->
+  <div class="toast" id="adminToast" role="status" aria-live="polite">
+    <span class="toast-dot" aria-hidden="true"></span>
+    <span id="adminToastText">Aggiornato</span>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      /* ----------------------------------------------------------------------
+         1. Shared BookingStore (Identical Contract with index.html)
+         ---------------------------------------------------------------------- */
+      const SUPABASE_CONFIG = {
+        enabled: false,
+        url: 'https://YOUR_PROJECT_REF.supabase.co',
+        anonKey: 'YOUR_SUPABASE_ANON_KEY',
+        tables: {
+          bookings: 'bookings',
+          settings: 'sala_settings'
+        }
+      };
+
+      const ALL_SLOTS = ['19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '22:00', '22:30'];
+      const DAYS_LONG_IT = ['Domenica', 'Luned\u00EC', 'Marted\u00EC', 'Mercoled\u00EC', 'Gioved\u00EC', 'Venerd\u00EC', 'Sabato'];
+      const MONTHS_LONG_IT = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno', 'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
+      const STATUS_LABELS = {
+        confirmed: 'Confermata',
+        pending: 'In attesa',
+        seated: 'Arrivato',
+        cancelled: 'Annullata'
+      };
+
+      function pad2(n) {
+        return String(n).padStart(2, '0');
+      }
+
+      function toISODateLocal(d) {
+        return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+      }
+
+      function getNextOpenDate(startDate) {
+        const d = new Date(startDate);
+        d.setHours(12, 0, 0, 0);
+        if (d.getDay() === 1) d.setDate(d.getDate() + 1);
+        return d;
+      }
+
+      function parseGuestSeats(guestVal) {
+        if (String(guestVal) === '8+') return 8;
+        const n = parseInt(guestVal, 10);
+        return Number.isFinite(n) && n > 0 ? n : 2;
+      }
+
+      function formatLongItalianDate(iso) {
+        if (!iso || !iso.includes('-')) return iso || '';
+        const parts = iso.split('-').map(Number);
+        const d = new Date(parts[0], parts[1] - 1, parts[2]);
+        return DAYS_LONG_IT[d.getDay()] + ' ' + d.getDate() + ' ' + MONTHS_LONG_IT[d.getMonth()] + ' ' + d.getFullYear();
+      }
+
+      const BookingStore = (function () {
+        const BOOKINGS_KEY = 'forno89_bookings_v1';
+        const SETTINGS_KEY = 'forno89_sala_settings_v1';
+        const CHANNEL_NAME = 'forno89_sala_sync_v1';
+        const ACTIVE_STATUSES = ['pending', 'confirmed', 'seated'];
+
+        const DEFAULT_SETTINGS = {
+          slotCapacity: 35,
+          isOnlineBookingOpen: true,
+          closedDates: [],
+          demoFullSlot: '21:00',
+          hostPin: '1989'
+        };
+
+        const channel = 'BroadcastChannel' in window ? new BroadcastChannel(CHANNEL_NAME) : null;
+        const listeners = new Set();
+
+        function buildSeedBookings() {
+          const d1 = getNextOpenDate(new Date());
+          const d2Base = new Date(d1);
+          d2Base.setDate(d1.getDate() + 1);
+          const d2 = getNextOpenDate(d2Base);
+          const iso1 = toISODateLocal(d1);
+          const iso2 = toISODateLocal(d2);
+          const nowIso = new Date().toISOString();
+
+          return [
+            {
+              id: 'seed-1',
+              code: '#F89-214',
+              date: iso1,
+              time: '19:30',
+              guests: '4',
+              guestCount: 4,
+              name: 'Marco Cattaneo',
+              phone: '+39 338 412 9081',
+              zone: 'Sala principale',
+              notes: 'Tavolo tranquillo vicino alla parete',
+              status: 'confirmed',
+              source: 'online',
+              createdAt: nowIso
+            },
+            {
+              id: 'seed-2',
+              code: '#F89-309',
+              date: iso1,
+              time: '20:00',
+              guests: '6',
+              guestCount: 6,
+              name: 'Elena Ferretti',
+              phone: '+39 347 905 1124',
+              zone: 'Vicino al forno a legna',
+              notes: 'Mozzarella senza lattosio per 1 ospite',
+              status: 'seated',
+              source: 'online',
+              createdAt: nowIso
+            },
+            {
+              id: 'seed-3',
+              code: '#F89-427',
+              date: iso1,
+              time: '20:30',
+              guests: '6',
+              guestCount: 6,
+              name: 'Luca e Giulia Rossi',
+              phone: '+39 339 771 4208',
+              zone: 'Sala principale',
+              notes: 'Seggiolone per bimbo',
+              status: 'pending',
+              source: 'online',
+              createdAt: nowIso
+            },
+            {
+              id: 'seed-4',
+              code: '#F89-512',
+              date: iso1,
+              time: '21:30',
+              guests: '4',
+              guestCount: 4,
+              name: 'Chiara Bergamaschi',
+              phone: '+39 320 684 3190',
+              zone: 'Dehors',
+              notes: 'Allergia frutta a guscio (noci/pistacchi)',
+              status: 'confirmed',
+              source: 'phone',
+              createdAt: nowIso
+            },
+            {
+              id: 'seed-5',
+              code: '#F89-618',
+              date: iso2,
+              time: '20:00',
+              guests: '4',
+              guestCount: 4,
+              name: 'Matteo Rinaldi',
+              phone: '+39 335 901 6642',
+              zone: 'Vicino al forno a legna',
+              notes: 'Compleanno, candelina sul dolce',
+              status: 'confirmed',
+              source: 'online',
+              createdAt: nowIso
+            },
+            {
+              id: 'seed-6',
+              code: '#F89-705',
+              date: iso2,
+              time: '20:30',
+              guests: '5',
+              guestCount: 5,
+              name: 'Sara Lombardi',
+              phone: '+39 348 229 5510',
+              zone: 'Sala principale',
+              notes: 'Impasto integrale se disponibile',
+              status: 'pending',
+              source: 'online',
+              createdAt: nowIso
+            }
+          ];
+        }
+
+        function safeReadJSON(key, fallback) {
+          try {
+            const raw = localStorage.getItem(key);
+            return raw ? JSON.parse(raw) : fallback;
+          } catch (err) {
+            return fallback;
+          }
+        }
+
+        function safeWriteJSON(key, val) {
+          try {
+            localStorage.setItem(key, JSON.stringify(val));
+          } catch (err) {
+            // Ignora errori quota
+          }
+        }
+
+        function ensureSeeded() {
+          if (localStorage.getItem(SETTINGS_KEY) === null) {
+            safeWriteJSON(SETTINGS_KEY, DEFAULT_SETTINGS);
+          }
+          if (localStorage.getItem(BOOKINGS_KEY) === null) {
+            safeWriteJSON(BOOKINGS_KEY, buildSeedBookings());
+          }
+        }
+
+        function notifyLocalAndTabs(reason) {
+          if (channel) {
+            try {
+              channel.postMessage({ type: 'SYNC', reason: reason || 'update', ts: Date.now() });
+            } catch (err) {
+              // Ignora
+            }
+          }
+          listeners.forEach((fn) => fn(reason || 'update', false));
+        }
+
+        if (channel) {
+          channel.onmessage = function (ev) {
+            if (ev && ev.data && ev.data.type === 'SYNC') {
+              listeners.forEach((fn) => fn(ev.data.reason || 'remote', true));
+            }
+          };
+        }
+
+        window.addEventListener('storage', function (ev) {
+          if (ev.key === BOOKINGS_KEY || ev.key === SETTINGS_KEY) {
+            listeners.forEach((fn) => fn('storage', true));
+          }
+        });
+
+        ensureSeeded();
+
+        return {
+          config: SUPABASE_CONFIG,
+          getSettings() {
+            const saved = safeReadJSON(SETTINGS_KEY, null);
+            return Object.assign({}, DEFAULT_SETTINGS, saved || {});
+          },
+          updateSettings(partial) {
+            const next = Object.assign({}, this.getSettings(), partial || {});
+            next.slotCapacity = Math.max(1, Math.min(300, parseInt(next.slotCapacity, 10) || DEFAULT_SETTINGS.slotCapacity));
+            safeWriteJSON(SETTINGS_KEY, next);
+            notifyLocalAndTabs('settings');
+            return next;
+          },
+          getBookings() {
+            const list = safeReadJSON(BOOKINGS_KEY, null);
+            if (!Array.isArray(list)) {
+              const seeded = buildSeedBookings();
+              safeWriteJSON(BOOKINGS_KEY, seeded);
+              return seeded;
+            }
+            return list;
+          },
+          generateUniqueCode() {
+            const existing = new Set(this.getBookings().map((b) => b.code));
+            for (let i = 0; i < 40; i++) {
+              const candidate = '#F89-' + String(Math.floor(100 + Math.random() * 900));
+              if (!existing.has(candidate)) return candidate;
+            }
+            return '#F89-' + String(Math.floor(1000 + Math.random() * 9000));
+          },
+          addBooking(payload) {
+            const list = this.getBookings();
+            const record = {
+              id: 'bk-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
+              code: payload.code || this.generateUniqueCode(),
+              date: payload.date,
+              time: payload.time,
+              guests: String(payload.guests || '2'),
+              guestCount: parseGuestSeats(payload.guests),
+              name: String(payload.name || '').trim(),
+              phone: String(payload.phone || '').trim(),
+              zone: payload.zone || 'Sala principale',
+              notes: String(payload.notes || '').trim(),
+              status: payload.status || 'confirmed',
+              source: payload.source || 'phone',
+              createdAt: new Date().toISOString()
+            };
+            list.unshift(record);
+            safeWriteJSON(BOOKINGS_KEY, list);
+            notifyLocalAndTabs('booking_added');
+            return record;
+          },
+          updateBookingStatus(id, newStatus) {
+            const list = this.getBookings();
+            let updated = null;
+            for (const b of list) {
+              if (b.id === id) {
+                b.status = newStatus;
+                updated = b;
+                break;
+              }
+            }
+            if (updated) {
+              safeWriteJSON(BOOKINGS_KEY, list);
+              notifyLocalAndTabs('status_changed');
+            }
+            return updated;
+          },
+          resetDemoData() {
+            safeWriteJSON(SETTINGS_KEY, DEFAULT_SETTINGS);
+            safeWriteJSON(BOOKINGS_KEY, buildSeedBookings());
+            notifyLocalAndTabs('reset');
+          },
+          getSlotStats(isoDate, time) {
+            const settings = this.getSettings();
+            const bookings = this.getBookings();
+            let bookedSeats = 0;
+            let activeTables = 0;
+
+            for (const b of bookings) {
+              if (b.date === isoDate && b.time === time && ACTIVE_STATUSES.includes(b.status)) {
+                bookedSeats += parseGuestSeats(b.guestCount || b.guests);
+                activeTables += 1;
+              }
+            }
+
+            const cap = settings.slotCapacity;
+            const remaining = Math.max(0, cap - bookedSeats);
+            const isDemoFull = Boolean(settings.demoFullSlot && time === settings.demoFullSlot);
+            const isFull = isDemoFull || bookedSeats >= cap;
+            const isLow = !isFull && remaining <= 8;
+
+            return {
+              bookedSeats,
+              activeTables,
+              remaining,
+              slotCapacity: cap,
+              isDemoFull,
+              isFull,
+              isLow
+            };
+          },
+          subscribe(fn) {
+            listeners.add(fn);
+            return () => listeners.delete(fn);
+          }
+        };
+      })();
+
+      window.Forno89Store = BookingStore;
+
+      /* ----------------------------------------------------------------------
+         2. PIN Auth Gate
+         ---------------------------------------------------------------------- */
+      const AUTH_SESSION_KEY = 'forno89_host_authenticated';
+      const pinGate = document.getElementById('pinGate');
+      const adminApp = document.getElementById('adminApp');
+      const pinForm = document.getElementById('pinForm');
+      const pinInput = document.getElementById('pinInput');
+      const pinError = document.getElementById('pinError');
+      const lockBtn = document.getElementById('lockBtn');
+
+      function setUnlocked(unlocked) {
+        pinGate.hidden = unlocked;
+        adminApp.hidden = !unlocked;
+        try {
+          if (unlocked) {
+            sessionStorage.setItem(AUTH_SESSION_KEY, '1');
+          } else {
+            sessionStorage.removeItem(AUTH_SESSION_KEY);
+          }
+        } catch (err) {
+          // Ignora
+        }
+        if (unlocked) {
+          renderAll();
+        } else if (pinInput) {
+          pinInput.value = '';
+          pinError.hidden = true;
+          pinInput.focus();
+        }
+      }
+
+      if (pinForm) {
+        pinForm.addEventListener('submit', (event) => {
+          event.preventDefault();
+          const expectedPin = BookingStore.getSettings().hostPin || '1989';
+          const entered = (pinInput ? pinInput.value : '').trim();
+          if (entered === expectedPin) {
+            pinError.hidden = true;
+            setUnlocked(true);
+          } else {
+            pinError.hidden = false;
+            if (pinInput) {
+              pinInput.select();
+              pinInput.focus();
+            }
+          }
+        });
+      }
+
+      if (lockBtn) {
+        lockBtn.addEventListener('click', () => setUnlocked(false));
+      }
+
+      /* ----------------------------------------------------------------------
+         3. Dashboard State & Rendering
+         ---------------------------------------------------------------------- */
+      const todayISO = toISODateLocal(new Date());
+      const tomorrowObj = new Date();
+      tomorrowObj.setDate(tomorrowObj.getDate() + 1);
+      const tomorrowISO = toISODateLocal(tomorrowObj);
+      const defaultServiceISO = toISODateLocal(getNextOpenDate(new Date()));
+
+      const uiState = {
+        date: defaultServiceISO,
+        statusFilter: 'all',
+        timeFilter: '',
+        searchQuery: ''
+      };
+
+      const selectedDateHeading = document.getElementById('selectedDateHeading');
+      const selectedDateSub = document.getElementById('selectedDateSub');
+      const btnToday = document.getElementById('btnToday');
+      const btnTomorrow = document.getElementById('btnTomorrow');
+      const adminDateInput = document.getElementById('adminDateInput');
+
+      const kpiSeats = document.getElementById('kpiSeats');
+      const kpiSeatsPct = document.getElementById('kpiSeatsPct');
+      const kpiActiveTables = document.getElementById('kpiActiveTables');
+      const kpiCancelledNote = document.getElementById('kpiCancelledNote');
+      const kpiConfPending = document.getElementById('kpiConfPending');
+      const kpiSeated = document.getElementById('kpiSeated');
+      const kpiSeatedSeats = document.getElementById('kpiSeatedSeats');
+
+      const slotsOverviewGrid = document.getElementById('slotsOverviewGrid');
+      const clearTimeFilterBtn = document.getElementById('clearTimeFilterBtn');
+      const bookingsList = document.getElementById('bookingsList');
+      const bookingsCountLabel = document.getElementById('bookingsCountLabel');
+      const statusFilterBtns = Array.from(document.querySelectorAll('.filter-pill'));
+      const searchInput = document.getElementById('searchInput');
+
+      const toggleOnlineBooking = document.getElementById('toggleOnlineBooking');
+      const onlineStatusPill = document.getElementById('onlineStatusPill');
+      const inputSlotCapacity = document.getElementById('inputSlotCapacity');
+      const capMinusBtn = document.getElementById('capMinusBtn');
+      const capPlusBtn = document.getElementById('capPlusBtn');
+      const saveCapacityBtn = document.getElementById('saveCapacityBtn');
+      const toggleDemo21 = document.getElementById('toggleDemo21');
+      const resetDemoBtn = document.getElementById('resetDemoBtn');
+
+      const adminToast = document.getElementById('adminToast');
+      const adminToastText = document.getElementById('adminToastText');
+      let toastTimer = null;
+
+      function showToast(msg) {
+        if (!adminToast || !adminToastText) return;
+        adminToastText.textContent = msg;
+        adminToast.classList.add('is-visible');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          adminToast.classList.remove('is-visible');
+        }, 2800);
+      }
+
+      function escapeHtml(str) {
+        return String(str || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function sanitizePhoneForWA(phone) {
+        const digits = String(phone || '').replace(/\D/g, '');
+        if (!digits) return '393330001122';
+        return digits.startsWith('39') ? digits : '39' + digits;
+      }
+
+      function buildCustomerWhatsAppURL(b) {
+        const guestsTxt = b.guests === '1' ? '1 persona' : b.guests + ' persone';
+        const msg =
+          'Ciao ' + b.name + '! Ti scriviamo da Pizzeria Forno 89 (Piacenza) per la tua prenotazione ' +
+          b.code + ' di ' + formatLongItalianDate(b.date) + ' alle ' + b.time +
+          ' (' + guestsTxt + ', ' + b.zone + '). A presto!';
+        return 'https://wa.me/' + sanitizePhoneForWA(b.phone) + '?text=' + encodeURIComponent(msg);
+      }
+
+      function renderControls() {
+        const s = BookingStore.getSettings();
+        if (toggleOnlineBooking) toggleOnlineBooking.checked = Boolean(s.isOnlineBookingOpen);
+        if (onlineStatusPill) {
+          onlineStatusPill.className = 'online-status-pill ' + (s.isOnlineBookingOpen ? 'online-status-pill--open' : 'online-status-pill--closed');
+          onlineStatusPill.textContent = s.isOnlineBookingOpen ? 'Prenotazioni online aperte' : 'Prenotazioni online chiuse';
+        }
+        if (inputSlotCapacity && document.activeElement !== inputSlotCapacity) {
+          inputSlotCapacity.value = s.slotCapacity;
+        }
+        if (toggleDemo21) {
+          toggleDemo21.checked = s.demoFullSlot === '21:00';
+        }
+      }
+
+      function renderAll() {
+        const settings = BookingStore.getSettings();
+        const allBookings = BookingStore.getBookings();
+        const dayBookings = allBookings.filter((b) => b.date === uiState.date);
+
+        // Date header & shortcuts
+        if (selectedDateHeading) {
+          selectedDateHeading.textContent = formatLongItalianDate(uiState.date);
+        }
+        if (selectedDateSub) {
+          const parts = uiState.date.split('-').map(Number);
+          const isMon = new Date(parts[0], parts[1] - 1, parts[2]).getDay() === 1;
+          selectedDateSub.textContent = isMon
+            ? 'Giorno di chiusura settimanale (Luned\u00EC) \u00B7 Via Sopramuro 42, Piacenza'
+            : 'Servizio serale 18:30\u201323:30 \u00B7 Capienza ' + settings.slotCapacity + ' coperti per fascia';
+        }
+        if (adminDateInput) adminDateInput.value = uiState.date;
+        if (btnToday) btnToday.classList.toggle('is-active', uiState.date === todayISO);
+        if (btnTomorrow) btnTomorrow.classList.toggle('is-active', uiState.date === tomorrowISO);
+
+        // KPI calculations
+        let activeSeats = 0;
+        let activeTables = 0;
+        let confirmedCount = 0;
+        let pendingCount = 0;
+        let seatedCount = 0;
+        let seatedSeats = 0;
+        let cancelledCount = 0;
+
+        for (const b of dayBookings) {
+          const seats = parseGuestSeats(b.guestCount || b.guests);
+          if (b.status === 'cancelled') {
+            cancelledCount += 1;
+          } else {
+            activeTables += 1;
+            activeSeats += seats;
+            if (b.status === 'confirmed') confirmedCount += 1;
+            if (b.status === 'pending') pendingCount += 1;
+            if (b.status === 'seated') {
+              seatedCount += 1;
+              seatedSeats += seats;
+            }
+          }
+        }
+
+        const totalDailyCapacity = settings.slotCapacity * ALL_SLOTS.length;
+        const pct = totalDailyCapacity > 0 ? Math.min(100, Math.round((activeSeats / totalDailyCapacity) * 100)) : 0;
+
+        if (kpiSeats) kpiSeats.textContent = activeSeats + ' / ' + totalDailyCapacity;
+        if (kpiSeatsPct) kpiSeatsPct.textContent = pct + '% occupazione su ' + ALL_SLOTS.length + ' fasce';
+        if (kpiActiveTables) kpiActiveTables.textContent = String(activeTables);
+        if (kpiCancelledNote) kpiCancelledNote.textContent = cancelledCount + (cancelledCount === 1 ? ' annullata' : ' annullate');
+        if (kpiConfPending) kpiConfPending.textContent = confirmedCount + ' / ' + pendingCount;
+        if (kpiSeated) kpiSeated.textContent = String(seatedCount);
+        if (kpiSeatedSeats) kpiSeatedSeats.textContent = seatedSeats + ' coperti in sala';
+
+        // Per-Slot Occupancy Overview
+        if (slotsOverviewGrid) {
+          slotsOverviewGrid.innerHTML = '';
+          ALL_SLOTS.forEach((slot) => {
+            const st = BookingStore.getSlotStats(uiState.date, slot);
+            const fillPct = st.isDemoFull ? 100 : Math.min(100, Math.round((st.bookedSeats / st.slotCapacity) * 100));
+            const card = document.createElement('button');
+            card.type = 'button';
+            card.className = 'slot-stat-card' + (uiState.timeFilter === slot ? ' is-filtered' : '');
+
+            let fillClass = 'slot-bar-fill';
+            let footClass = 'slot-stat-foot';
+            let footText = st.remaining + ' liberi';
+
+            if (st.isFull) {
+              fillClass += ' slot-bar-fill--full';
+              footClass += ' slot-stat-foot--full';
+              footText = st.isDemoFull && st.bookedSeats < st.slotCapacity ? 'Completo (demo)' : 'Completo';
+            } else if (st.isLow) {
+              fillClass += ' slot-bar-fill--warn';
+              footClass += ' slot-stat-foot--warn';
+              footText = 'Ultimi ' + st.remaining + ' posti';
+            }
+
+            card.innerHTML =
+              '<div class="slot-stat-top">' +
+                '<span class="slot-stat-time">' + slot + '</span>' +
+                '<span class="slot-stat-ratio">' + st.bookedSeats + '/' + st.slotCapacity + '</span>' +
+              '</div>' +
+              '<div class="slot-bar-track"><div class="' + fillClass + '" style="width:' + fillPct + '%"></div></div>' +
+              '<span class="' + footClass + '">' + footText + '</span>';
+
+            card.addEventListener('click', () => {
+              uiState.timeFilter = uiState.timeFilter === slot ? '' : slot;
+              renderAll();
+            });
+            slotsOverviewGrid.appendChild(card);
+          });
+        }
+
+        if (clearTimeFilterBtn) {
+          clearTimeFilterBtn.hidden = !uiState.timeFilter;
+        }
+
+        // Update filter badge counts
+        const countMap = {
+          all: dayBookings.length,
+          confirmed: confirmedCount,
+          pending: pendingCount,
+          seated: seatedCount,
+          cancelled: cancelledCount
+        };
+        document.querySelectorAll('[data-count]').forEach((el) => {
+          const key = el.getAttribute('data-count');
+          el.textContent = String(countMap[key] || 0);
+        });
+
+        // Filtered + searched bookings list
+        const query = uiState.searchQuery.trim().toLowerCase();
+        const filtered = dayBookings
+          .filter((b) => {
+            if (uiState.statusFilter !== 'all' && b.status !== uiState.statusFilter) return false;
+            if (uiState.timeFilter && b.time !== uiState.timeFilter) return false;
+            if (query) {
+              const hay = (b.name + ' ' + b.code + ' ' + b.phone + ' ' + b.zone + ' ' + b.notes).toLowerCase();
+              if (!hay.includes(query)) return false;
+            }
+            return true;
+          })
+          .sort((a, b) => a.time.localeCompare(b.time) || a.code.localeCompare(b.code));
+
+        if (bookingsCountLabel) {
+          const timeSuffix = uiState.timeFilter ? ' · Fascia ' + uiState.timeFilter : '';
+          bookingsCountLabel.textContent =
+            filtered.length + (filtered.length === 1 ? ' prenotazione' : ' prenotazioni') + timeSuffix;
+        }
+
+        if (bookingsList) {
+          bookingsList.innerHTML = '';
+          if (filtered.length === 0) {
+            bookingsList.innerHTML =
+              '<div class="empty-state">Nessuna prenotazione trovata per i filtri selezionati.</div>';
+          } else {
+            filtered.forEach((b) => {
+              const row = document.createElement('article');
+              row.className = 'booking-row' + (b.status === 'cancelled' ? ' is-cancelled' : '');
+              const guestsLabel = b.guests === '1' ? '1 pers.' : b.guests + ' pers.';
+              const statusLabel = STATUS_LABELS[b.status] || b.status;
+              const sourceLabel = b.source === 'phone' ? 'Telefono' : 'Online';
+
+              const notesHtml = b.notes
+                ? '<div class="booking-notes"><strong>Note / Allergie:</strong> ' + escapeHtml(b.notes) + '</div>'
+                : '';
+
+              const waHref = buildCustomerWhatsAppURL(b);
+
+              let actionsHtml = '';
+              if (b.status !== 'seated' && b.status !== 'cancelled') {
+                actionsHtml += '<button type="button" class="act-btn act-btn--seated" data-act="seated" data-id="' + escapeHtml(b.id) + '">Arrivato</button>';
+              }
+              if (b.status !== 'confirmed') {
+                actionsHtml += '<button type="button" class="act-btn act-btn--confirm" data-act="confirmed" data-id="' + escapeHtml(b.id) + '">' + (b.status === 'cancelled' ? 'Ripristina' : 'Conferma') + '</button>';
+              }
+              if (b.status !== 'cancelled') {
+                actionsHtml += '<button type="button" class="act-btn act-btn--cancel" data-act="cancelled" data-id="' + escapeHtml(b.id) + '">Annulla</button>';
+              }
+              actionsHtml += '<a href="' + waHref + '" target="_blank" rel="noopener noreferrer" class="act-btn act-btn--wa">WhatsApp</a>';
+
+              row.innerHTML =
+                '<div class="booking-row-top">' +
+                  '<div class="booking-row-badges">' +
+                    '<span class="time-badge">' + escapeHtml(b.time) + '</span>' +
+                    '<span class="code-badge">' + escapeHtml(b.code) + '</span>' +
+                    '<span class="guests-badge">' + escapeHtml(guestsLabel) + '</span>' +
+                    '<span class="source-tag">' + sourceLabel + '</span>' +
+                  '</div>' +
+                  '<span class="status-badge status-badge--' + escapeHtml(b.status) + '">' + statusLabel + '</span>' +
+                '</div>' +
+                '<div class="booking-row-main">' +
+                  '<div class="booking-customer-line">' +
+                    '<span class="booking-customer-name">' + escapeHtml(b.name) + '</span>' +
+                    '<a href="tel:' + escapeHtml(b.phone.replace(/\s+/g, '')) + '" class="booking-phone">' + escapeHtml(b.phone) + '</a>' +
+                  '</div>' +
+                  '<span class="booking-zone">Zona: ' + escapeHtml(b.zone) + '</span>' +
+                  notesHtml +
+                '</div>' +
+                '<div class="booking-actions">' + actionsHtml + '</div>';
+
+              bookingsList.appendChild(row);
+            });
+          }
+        }
+
+        renderControls();
+      }
+
+      /* ----------------------------------------------------------------------
+         4. Event Listeners (Date, Filters, Actions, Sala Controls)
+         ---------------------------------------------------------------------- */
+      if (btnToday) {
+        btnToday.addEventListener('click', () => {
+          uiState.date = todayISO;
+          uiState.timeFilter = '';
+          renderAll();
+        });
+      }
+      if (btnTomorrow) {
+        btnTomorrow.addEventListener('click', () => {
+          uiState.date = tomorrowISO;
+          uiState.timeFilter = '';
+          renderAll();
+        });
+      }
+      if (adminDateInput) {
+        adminDateInput.addEventListener('change', () => {
+          if (adminDateInput.value) {
+            uiState.date = adminDateInput.value;
+            uiState.timeFilter = '';
+            renderAll();
+          }
+        });
+      }
+      if (clearTimeFilterBtn) {
+        clearTimeFilterBtn.addEventListener('click', () => {
+          uiState.timeFilter = '';
+          renderAll();
+        });
+      }
+
+      statusFilterBtns.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          uiState.statusFilter = btn.dataset.status;
+          statusFilterBtns.forEach((b) => {
+            const active = b === btn;
+            b.classList.toggle('is-active', active);
+            b.setAttribute('aria-selected', String(active));
+          });
+          renderAll();
+        });
+      });
+
+      if (searchInput) {
+        searchInput.addEventListener('input', () => {
+          uiState.searchQuery = searchInput.value;
+          renderAll();
+        });
+      }
+
+      if (bookingsList) {
+        bookingsList.addEventListener('click', (event) => {
+          const btn = event.target.closest('button[data-act]');
+          if (!btn) return;
+          const id = btn.dataset.id;
+          const nextStatus = btn.dataset.act;
+          const updated = BookingStore.updateBookingStatus(id, nextStatus);
+          if (updated) {
+            const msgMap = {
+              seated: updated.code + ' segnato come arrivato in sala.',
+              confirmed: updated.code + ' confermato.',
+              cancelled: updated.code + ' annullato — coperti liberati subito.'
+            };
+            showToast(msgMap[nextStatus] || 'Stato aggiornato.');
+          }
+        });
+      }
+
+      // Controlli Sala
+      if (toggleOnlineBooking) {
+        toggleOnlineBooking.addEventListener('change', () => {
+          const open = toggleOnlineBooking.checked;
+          BookingStore.updateSettings({ isOnlineBookingOpen: open });
+          showToast(open ? 'Prenotazioni online riaperte.' : 'Prenotazioni online chiuse sul sito.');
+        });
+      }
+
+      function applyCapacityFromInput() {
+        if (!inputSlotCapacity) return;
+        const val = Math.max(1, Math.min(300, parseInt(inputSlotCapacity.value, 10) || 35));
+        inputSlotCapacity.value = val;
+        BookingStore.updateSettings({ slotCapacity: val });
+        showToast('Capienza aggiornata a ' + val + ' coperti per fascia.');
+      }
+
+      if (capMinusBtn && inputSlotCapacity) {
+        capMinusBtn.addEventListener('click', () => {
+          inputSlotCapacity.value = Math.max(1, (parseInt(inputSlotCapacity.value, 10) || 35) - 5);
+          applyCapacityFromInput();
+        });
+      }
+      if (capPlusBtn && inputSlotCapacity) {
+        capPlusBtn.addEventListener('click', () => {
+          inputSlotCapacity.value = Math.min(300, (parseInt(inputSlotCapacity.value, 10) || 35) + 5);
+          applyCapacityFromInput();
+        });
+      }
+      if (saveCapacityBtn) {
+        saveCapacityBtn.addEventListener('click', applyCapacityFromInput);
+      }
+      if (inputSlotCapacity) {
+        inputSlotCapacity.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            applyCapacityFromInput();
+          }
+        });
+      }
+
+      if (toggleDemo21) {
+        toggleDemo21.addEventListener('change', () => {
+          BookingStore.updateSettings({ demoFullSlot: toggleDemo21.checked ? '21:00' : '' });
+          showToast(toggleDemo21.checked ? 'Slot 21:00 impostato come completo (demo).' : 'Slot 21:00 sbloccato.');
+        });
+      }
+
+      if (resetDemoBtn) {
+        resetDemoBtn.addEventListener('click', () => {
+          BookingStore.resetDemoData();
+          uiState.date = defaultServiceISO;
+          uiState.statusFilter = 'all';
+          uiState.timeFilter = '';
+          uiState.searchQuery = '';
+          if (searchInput) searchInput.value = '';
+          statusFilterBtns.forEach((b) => {
+            const active = b.dataset.status === 'all';
+            b.classList.toggle('is-active', active);
+            b.setAttribute('aria-selected', String(active));
+          });
+          showToast('Dati dimostrativi ripristinati.');
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+         5. Modal "+ Nuova prenotazione telefonica"
+         ---------------------------------------------------------------------- */
+      const phoneModal = document.getElementById('phoneModal');
+      const openPhoneModalBtn = document.getElementById('openPhoneModalBtn');
+      const closePhoneModalBtn = document.getElementById('closePhoneModalBtn');
+      const cancelPhoneModalBtn = document.getElementById('cancelPhoneModalBtn');
+      const phoneBookingForm = document.getElementById('phoneBookingForm');
+      const pmDate = document.getElementById('pmDate');
+      const pmTime = document.getElementById('pmTime');
+      const pmGuests = document.getElementById('pmGuests');
+      const pmZone = document.getElementById('pmZone');
+      const pmName = document.getElementById('pmName');
+      const pmPhone = document.getElementById('pmPhone');
+      const pmStatus = document.getElementById('pmStatus');
+      const pmNotes = document.getElementById('pmNotes');
+      const pmSlotHint = document.getElementById('pmSlotHint');
+      const pmFeedback = document.getElementById('pmFeedback');
+
+      function updateModalSlotHint() {
+        if (!pmSlotHint || !pmDate || !pmTime) return;
+        const iso = pmDate.value || uiState.date;
+        const st = BookingStore.getSlotStats(iso, pmTime.value);
+        pmSlotHint.textContent =
+          'Fascia ' + pmTime.value + ': ' + st.bookedSeats + ' / ' + st.slotCapacity +
+          ' coperti prenotati (' + st.remaining + ' disponibili).';
+      }
+
+      function openPhoneModal() {
+        if (!phoneModal) return;
+        if (pmDate) pmDate.value = uiState.date;
+        if (pmFeedback) pmFeedback.hidden = true;
+        updateModalSlotHint();
+        phoneModal.hidden = false;
+        document.body.classList.add('modal-open');
+        if (pmName) pmName.focus();
+      }
+
+      function closePhoneModal() {
+        if (!phoneModal) return;
+        phoneModal.hidden = true;
+        document.body.classList.remove('modal-open');
+      }
+
+      if (openPhoneModalBtn) openPhoneModalBtn.addEventListener('click', openPhoneModal);
+      if (closePhoneModalBtn) closePhoneModalBtn.addEventListener('click', closePhoneModal);
+      if (cancelPhoneModalBtn) cancelPhoneModalBtn.addEventListener('click', closePhoneModal);
+      if (phoneModal) {
+        phoneModal.addEventListener('click', (e) => {
+          if (e.target === phoneModal) closePhoneModal();
+        });
+      }
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && phoneModal && !phoneModal.hidden) {
+          closePhoneModal();
+        }
+      });
+
+      if (pmDate) pmDate.addEventListener('change', updateModalSlotHint);
+      if (pmTime) pmTime.addEventListener('change', updateModalSlotHint);
+
+      if (phoneBookingForm) {
+        phoneBookingForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          if (pmFeedback) pmFeedback.hidden = true;
+
+          const nameVal = pmName ? pmName.value.trim() : '';
+          const phoneVal = pmPhone ? pmPhone.value.trim() : '';
+          const dateVal = pmDate ? pmDate.value : uiState.date;
+
+          if (!dateVal) {
+            pmFeedback.textContent = 'Seleziona una data valida.';
+            pmFeedback.hidden = false;
+            return;
+          }
+          if (nameVal.length < 2) {
+            pmFeedback.textContent = 'Inserisci il nome del cliente.';
+            pmFeedback.hidden = false;
+            if (pmName) pmName.focus();
+            return;
+          }
+          if (phoneVal.replace(/\D/g, '').length < 6) {
+            pmFeedback.textContent = 'Inserisci un numero di telefono valido.';
+            pmFeedback.hidden = false;
+            if (pmPhone) pmPhone.focus();
+            return;
+          }
+
+          const created = BookingStore.addBooking({
+            date: dateVal,
+            time: pmTime ? pmTime.value : '20:00',
+            guests: pmGuests ? pmGuests.value : '2',
+            zone: pmZone ? pmZone.value : 'Sala principale',
+            name: nameVal,
+            phone: phoneVal,
+            notes: pmNotes ? pmNotes.value.trim() : '',
+            status: pmStatus ? pmStatus.value : 'confirmed',
+            source: 'phone'
+          });
+
+          uiState.date = created.date;
+          uiState.timeFilter = '';
+          phoneBookingForm.reset();
+          closePhoneModal();
+          renderAll();
+          showToast('Prenotazione telefonica ' + created.code + ' aggiunta!');
+        });
+      }
+
+      /* ----------------------------------------------------------------------
+         6. Real-Time Subscription & Initial Auth Check
+         ---------------------------------------------------------------------- */
+      BookingStore.subscribe((reason, isRemote) => {
+        if (!adminApp.hidden) {
+          renderAll();
+          if (isRemote && reason === 'booking_added') {
+            showToast('Nuova prenotazione ricevuta dal sito in tempo reale!');
+          } else if (isRemote) {
+            showToast('Sala aggiornata in tempo reale.');
+          }
+        }
+      });
+
+      let alreadyUnlocked = false;
+      try {
+        alreadyUnlocked = sessionStorage.getItem(AUTH_SESSION_KEY) === '1';
+      } catch (err) {
+        alreadyUnlocked = false;
+      }
+      setUnlocked(alreadyUnlocked);
+    })();
+  </script>
+</body>
+</html>
